@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="WEB-INF/template/biblioteca.xhtml">
+
+	<ui:define name="titulo">
+		<p:outputLabel value="Cadastro de autores" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="frmCadastrosAutores">
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+			<p:toolbar>
+
+				<f:facet name="left">
+
+					<p:commandButton value="Incluir novo autor"
+						title="Incluir um novo autor." icon="ui-icon-document"
+						onclick="PF('dlgAutor').show()"
+						actionListener="#{cadastrosAutoresView.novo}"
+						update="otptPnlAutor" />
+
+				</f:facet>
+
+				<f:facet name="right">
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+
+					<p:inputText id="iptNome"
+						value="#{cadastrosAutoresView.nomeFiltro}" styleClass="iptNome"
+						title="Pesquisar autores pelo nome." /> &nbsp;
+					<p:watermark for="iptNome" value="Nome do autor" />
+
+					<p:commandButton value="Pesquisar"
+						actionListener="#{cadastrosAutoresView.consultar}"
+						update="growl otptPnlLista" icon="ui-icon-search" />
+
+				</f:facet>
+
+			</p:toolbar>
+
+			<p></p>
+
+			<p:outputPanel id="otptPnlLista">
+
+				<p:dataTable id="dttblLista" value="#{cadastrosAutoresView.autores}"
+					var="autor" selectionMode="single" rowKey="#{autor.id}"
+					resizableColumns="true"
+					rendered="#{cadastrosAutoresView.autores != null and not empty cadastrosAutoresView.autores}">
+
+					<p:column style="width:10%;text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{autor.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nome" />
+						</f:facet>
+						<h:outputText value="#{autor.nome}" />
+					</p:column>
+
+					<p:column styleClass="cl-dt-btn">
+
+						<p:commandButton title="Editar um autor selecionado."
+							icon="ui-icon-pencil" styleClass="btn-dt"
+							onclick="PF('dlgAutor').show()"
+							actionListener="#{cadastrosAutoresView.editar(autor)}"
+							update=":frmCadastrosAutores:otptPnlAutor" />
+
+						<p:commandButton title="Excluir um autor selecionado."
+							icon="ui-icon-trash" styleClass="btn-dt"
+							actionListener="#{cadastrosAutoresView.excluir(autor)}"
+							update=":frmCadastrosAutores:otptPnlLista">
+
+							<p:confirm header="Confirmação"
+								message="Deseja realmente excluir o registro?"
+								icon="ui-icon-alert" />
+
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:outputPanel>
+
+			<p:dialog id="dlgAutor" widgetVar="dlgAutor" modal="true"
+				header="Autor">
+
+				<p:outputPanel id="otptPnlAutor">
+
+					<p:panelGrid styleClass="ui-noborder"
+						style="ui-panelgrid-blank;margin-top:0px">
+
+						<p:row>
+
+							<p:column>Nome:
+						</p:column>
+							<p:column>
+								<p:inputText styleClass="iptNome"
+									value="#{cadastrosAutoresView.nome}" />
+							</p:column>
+
+						</p:row>
+
+					</p:panelGrid>
+
+					<p:toolbar
+						style="padding-top:4px;padding-right: 8px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
+
+						<f:facet name="right">
+
+							<p:commandButton title="Salvar" value="Salvar"
+								icon="ui-icon-disk"
+								actionListener="#{cadastrosAutoresView.salvar}"
+								update="growl otptPnlLista"
+								oncomplete="handleSalvarRequest(xhr, status, args)" />
+
+						</f:facet>
+
+					</p:toolbar>
+
+				</p:outputPanel>
+
+			</p:dialog>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+				<p:toolbar
+					style="padding-top:4px;padding-right: 0px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
+
+					<f:facet name="right">
+
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+					</f:facet>
+
+				</p:toolbar>
+
+			</p:confirmDialog>
+
+		</h:form>
+
+		<script type="text/javascript">
+			function handleSalvarRequest(xhr, status, args) {
+				if (args.validationFailed || !args.salvo) {
+					PF('dlgAutor').jq.effect("shake", {
+						times : 5
+					}, 100);
+				} else {
+					PF('dlgAutor').hide();
+				}
+			}
+		</script>
+
+	</ui:define>
+
+</ui:composition>

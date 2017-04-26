@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<title>Prosperis - escola</title>
+
+	<style>
+.ui-widget {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+
+.ui-menu.ui-menubar {
+	height: 22px;
+	padding-top: 0px;
+	padding-right: 20px;
+	padding-left: 10px;
+}
+
+.ui-fieldset, .ui-fieldset .ui-fieldset-legend {
+	padding: .6em 1em;
+}
+
+.ui-outputlabel {
+	font-size: 20px;
+	color: #5e9c9e;
+}
+
+.ui-widget-header .ui-state-default {
+	border: 0px;
+}
+
+.cl-dt-btn {
+	width: 60px;
+	text-align: center;
+}
+
+.cl-dt-btn .btn-dt {
+	border: 0px;
+}
+
+.iptNome {
+	width: 300px;
+}
+
+</style>
+
+</h:head>
+
+<h:body>
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()" />
+
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<p:graphicImage library="imagens" name="load.gif" />
+	</p:dialog>
+
+	<h:form>
+
+		<p:menubar>
+			<p:submenu label="Cadastros">
+				<p:menuitem value="Autores" outcome="/cadastrosAutores" />
+				<p:menuitem value="Editoras" />
+			</p:submenu>
+		</p:menubar>
+
+	</h:form>
+
+	<p></p>
+	<ui:insert name="titulo" />
+	<p></p>
+	<ui:insert name="conteudo" />
+
+</h:body>
+
+</html>
