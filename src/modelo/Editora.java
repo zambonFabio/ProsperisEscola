@@ -9,22 +9,22 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "autor", schema = "public")
-public class Autor {
+@Table(name = "editora", schema = "public")
+public class Editora {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "autor_sequence")
-	@SequenceGenerator(name = "autor_sequence", sequenceName = "autor_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "editora_sequence")
+	@SequenceGenerator(name = "editora_sequence", sequenceName = "editora_sequence", allocationSize = 1)
 	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = true)
 	private Integer id;
 
 	@Column(name = "nome", unique = true, nullable = false, insertable = true, updatable = true, length = 100)
 	private String nome;
 
-	public Autor() {
+	public Editora() {
 	}
 
-	public Autor(Integer id, String nome) {
+	public Editora(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
