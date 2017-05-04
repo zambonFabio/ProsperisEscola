@@ -18,15 +18,16 @@ public class Assunto {
 	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = true)
 	private Integer id;
 
-	@Column(name = "descricao", unique = true, nullable = false, insertable = true, updatable = true, length = 100)
-	private String descricao;
+	@Column(name = "assunto", unique = true, nullable = false, insertable = true, updatable = true, length = 100)
+	private String assunto;
 
 	public Assunto() {
+
 	}
 
-	public Assunto(Integer id, String descricao) {
+	public Assunto(Integer id, String assunto) {
 		this.id = id;
-		this.descricao = descricao;
+		this.assunto = assunto;
 	}
 
 	public Integer getId() {
@@ -37,12 +38,12 @@ public class Assunto {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getAssunto() {
+		return assunto;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setAssunto(String assunto) {
+		this.assunto = assunto;
 	}
 
 }
