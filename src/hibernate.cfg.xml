@@ -31,9 +31,11 @@
 		<!-- mapping classes -->
 		<mapping class="modelo.Ano" />
 		<mapping class="modelo.Assunto" />
-		<mapping class="modelo.Autor" />
 		<mapping class="modelo.Pessoa" />
 		<mapping class="modelo.PessoaFisica" />
+		<mapping class="modelo.Autor" />
+		<mapping class="modelo.PessoaJuridica" />
+		<mapping class="modelo.Editora" />
 
 	</session-factory>
 </hibernate-configuration>

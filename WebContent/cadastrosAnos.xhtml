@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="WEB-INF/template/biblioteca.xhtml">
+
+	<ui:define name="titulo">
+		<p:outputLabel value="Cadastro de anos" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="frmCadastrosAnos">
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+			<p:toolbar>
+
+				<f:facet name="left">
+
+					<p:commandButton value="Incluir novo ano"
+						title="Incluir um novo ano." icon="ui-icon-document"
+						onclick="PF('dlgAno').show()"
+						actionListener="#{cadastrosAnosView.novo}"
+						update="otptPnlAno" />
+
+				</f:facet>
+				
+				<f:facet name="right">
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+					<p:commandButton value="Listar"
+						actionListener="#{cadastrosAnosView.consultar}"
+						update="growl otptPnlLista" icon="ui-icon-search" />
+
+				</f:facet>
+
+			</p:toolbar>
+
+			<p></p>
+
+			<p:outputPanel id="otptPnlLista">
+
+				<p:dataTable id="dttblLista" value="#{cadastrosAnosView.anos}"
+					var="ano" selectionMode="single" rowKey="#{ano.id}"
+					resizableColumns="true"
+					rendered="#{cadastrosAnosView.anos != null and not empty cadastrosAnosView.anos}">
+
+					<p:column style="width:10%;text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{ano.id}" />
+					</p:column>
+
+					<p:column style="width:80%;text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{ano.ano}" />
+					</p:column>
+
+					<p:column styleClass="cl-dt-btn">
+
+						<p:commandButton title="Editar um ano selecionado."
+							icon="ui-icon-pencil" styleClass="btn-dt"
+							onclick="PF('dlgAno').show()"
+							actionListener="#{cadastrosAnosView.editar(ano)}"
+							update=":frmCadastrosAnos:otptPnlAno" />
+
+						<p:commandButton title="Excluir um ano selecionado."
+							icon="ui-icon-trash" styleClass="btn-dt"
+							actionListener="#{cadastrosAnosView.excluir(ano)}"
+							update=":frmCadastrosAnos:otptPnlLista">
+
+							<p:confirm header="Confirmação"
+								message="Deseja realmente excluir o registro?"
+								icon="ui-icon-alert" />
+
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:outputPanel>
+
+			<p:dialog id="dlgAno" widgetVar="dlgAno" modal="true"
+				header="Ano">
+
+				<p:outputPanel id="otptPnlAno">
+
+					<p:panelGrid styleClass="ui-noborder"
+						style="ui-panelgrid-blank;margin-top:0px">
+
+						<p:row>
+
+							<p:column>Ano:
+						</p:column>
+							<p:column>
+								<p:inputText styleClass="iptAno"
+									value="#{cadastrosAnosView.ano}" />
+							</p:column>
+
+						</p:row>
+
+					</p:panelGrid>
+
+					<p:toolbar
+						style="padding-top:4px;padding-right: 8px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
+
+						<f:facet name="right">
+
+							<p:commandButton title="Salvar" value="Salvar"
+								icon="ui-icon-disk"
+								actionListener="#{cadastrosAnosView.salvar}"
+								update="growl otptPnlLista"
+								oncomplete="handleSalvarRequest(xhr, status, args)" />
+
+						</f:facet>
+
+					</p:toolbar>
+
+				</p:outputPanel>
+
+			</p:dialog>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+				<p:toolbar
+					style="padding-top:4px;padding-right: 0px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
+
+					<f:facet name="right">
+
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+					</f:facet>
+
+				</p:toolbar>
+
+			</p:confirmDialog>
+
+		</h:form>
+
+		<script type="text/javascript">
+			function handleSalvarRequest(xhr, status, args) {
+				if (args.validationFailed || !args.salvo) {
+					PF('dlgAno').jq.effect("shake", {
+						times : 5
+					}, 100);
+				} else {
+					PF('dlgAno').hide();
+				}
+			}
+		</script>
+
+	</ui:define>
+
+</ui:composition>
