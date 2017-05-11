@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="WEB-INF/template/biblioteca.xhtml">
+
+	<ui:define name="titulo">
+		<p:outputLabel value="Cadastro de editoras" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="frmCadastrosEditoras">
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+			<p:toolbar>
+
+				<f:facet name="left">
+
+					<p:commandButton value="Incluir nova editora"
+						title="Incluir um nova editora." icon="ui-icon-document"
+						onclick="PF('dlgEditora').show()"
+						actionListener="#{cadastrosEditorasView.novo}"
+						update="otptPnlEditora" />
+
+				</f:facet>
+
+				<f:facet name="right">
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+
+					<p:inputText id="iptNomeFantasia"
+						value="#{cadastrosEditorasView.nomeFantasiaFiltro}" styleClass="iptNome"
+						title="Pesquisar editoras pelo nome fantasia." /> &nbsp;
+					<p:watermark for="iptNomeFantasia" value="Nome fantasia da editora" />
+
+					<p:commandButton value="Pesquisar"
+						actionListener="#{cadastrosEditorasView.consultar}"
+						update="growl otptPnlLista" icon="ui-icon-search" />
+
+				</f:facet>
+
+			</p:toolbar>
+
+			<p></p>
+
+			<p:outputPanel id="otptPnlLista">
+
+				<p:dataTable id="dttblLista" value="#{cadastrosEditorasView.editoras}"
+					var="editora" selectionMode="single" rowKey="#{editora.id}"
+					resizableColumns="true"
+					rendered="#{cadastrosEditorasView.editoras != null and not empty cadastrosEditorasView.editoras}">
+
+					<p:column style="width:10%;text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{editora.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nome fantasia" />
+						</f:facet>
+						<h:outputText value="#{editora.nomeFantasia}" />
+					</p:column>
+
+					<p:column styleClass="cl-dt-btn">
+
+						<p:commandButton title="Editar uma editora selecionada."
+							icon="ui-icon-pencil" styleClass="btn-dt"
+							onclick="PF('dlgEditora').show()"
+							actionListener="#{cadastrosEditorasView.editar(editora)}"
+							update=":frmCadastrosEditoras:otptPnlEditora" />
+
+						<p:commandButton title="Excluir uma editora selecionada."
+							icon="ui-icon-trash" styleClass="btn-dt"
+							actionListener="#{cadastrosEditorasView.excluir(editora)}"
+							update=":frmCadastrosEditoras:otptPnlLista">
+
+							<p:confirm header="Confirmação"
+								message="Deseja realmente excluir o registro?"
+								icon="ui-icon-alert" />
+
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:outputPanel>
+
+			<p:dialog id="dlgEditora" widgetVar="dlgEditora" modal="true"
+				header="Editora">
+
+				<p:outputPanel id="otptPnlEditora">
+
+					<p:panelGrid styleClass="ui-noborder"
+						style="ui-panelgrid-blank;margin-top:0px">
+
+						<p:row>
+
+							<p:column>Nome fantasia:
+						</p:column>
+							<p:column>
+								<p:inputText styleClass="iptNomeFantasia"
+									value="#{cadastrosEditorasView.nomeFantasia}" />
+							</p:column>
+
+						</p:row>
+
+					</p:panelGrid>
+
+					<p:toolbar
+						style="padding-top:4px;padding-right: 8px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
+
+						<f:facet name="right">
+
+							<p:commandButton title="Salvar" value="Salvar"
+								icon="ui-icon-disk"
+								actionListener="#{cadastrosEditorasView.salvar}"
+								update="growl otptPnlLista"
+								oncomplete="handleSalvarRequest(xhr, status, args)" />
+
+						</f:facet>
+
+					</p:toolbar>
+
+				</p:outputPanel>
+
+			</p:dialog>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+				<p:toolbar
+					style="padding-top:4px;padding-right: 0px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
+
+					<f:facet name="right">
+
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+					</f:facet>
+
+				</p:toolbar>
+
+			</p:confirmDialog>
+
+		</h:form>
+
+		<script type="text/javascript">
+			function handleSalvarRequest(xhr, status, args) {
+				if (args.validationFailed || !args.salvo) {
+					PF('dlgEditora').jq.effect("shake", {
+						times : 5
+					}, 100);
+				} else {
+					PF('dlgEditora').hide();
+				}
+			}
+		</script>
+
+	</ui:define>
+
+</ui:composition>
