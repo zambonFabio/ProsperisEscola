@@ -35,6 +35,7 @@
 		<mapping class="modelo.PessoaFisica" />
 		<mapping class="modelo.Autor" />
 		<mapping class="modelo.PessoaJuridica" />
+		<mapping class="modelo.Edicao" />
 		<mapping class="modelo.Editora" />
 
 	</session-factory>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="WEB-INF/template/biblioteca.xhtml">
+
+	<ui:define name="titulo">
+		<p:outputLabel value="Cadastro de edicoes" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="frmCadastrosEdicoes">
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+			<p:toolbar>
+
+				<f:facet name="left">
+
+					<p:commandButton value="Incluir nova edição"
+						title="Incluir uma nova edição." icon="ui-icon-document"
+						onclick="PF('dlgEdicao').show()"
+						actionListener="#{cadastrosEdicoesView.novo}"
+						update="otptPnlEdicao" />
+
+				</f:facet>
+
+				<f:facet name="right">
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+
+					<p:inputText id="iptEdicao"
+						value="#{cadastrosEdicoesView.edicaoFiltro}" styleClass="iptNome"
+						title="Pesquisar por edição." /> &nbsp;
+					<p:watermark for="iptEdicao" value="Edição" />
+
+					<p:commandButton value="Pesquisar"
+						actionListener="#{cadastrosEdicoesView.consultar}"
+						update="growl otptPnlLista" icon="ui-icon-search" />
+
+				</f:facet>
+
+			</p:toolbar>
+
+			<p></p>
+
+			<p:outputPanel id="otptPnlLista">
+
+				<p:dataTable id="dttblLista" value="#{cadastrosEdicoesView.edicoes}"
+					var="edicao" selectionMode="single" rowKey="#{edicao.id}"
+					resizableColumns="true"
+					rendered="#{cadastrosEdicoesView.edicoes != null and not empty cadastrosEdicoesView.edicoes}">
+
+					<p:column style="width:10%;text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{edicao.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Edicao" />
+						</f:facet>
+						<h:outputText value="#{edicao.edicao}" />
+					</p:column>
+
+					<p:column styleClass="cl-dt-btn">
+
+						<p:commandButton title="Editar uma edição."
+							icon="ui-icon-pencil" styleClass="btn-dt"
+							onclick="PF('dlgEdicao').show()"
+							actionListener="#{cadastrosEdicoesView.editar(edicao)}"
+							update=":frmCadastrosEdicoes:otptPnlEdicao" />
+
+						<p:commandButton title="Excluir uma edição selecionada."
+							icon="ui-icon-trash" styleClass="btn-dt"
+							actionListener="#{cadastrosEdicoesView.excluir(edicao)}"
+							update=":frmCadastrosEdicoes:otptPnlLista">
+
+							<p:confirm header="Confirmação"
+								message="Deseja realmente excluir o registro?"
+								icon="ui-icon-alert" />
+
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:outputPanel>
+
+			<p:dialog id="dlgEdicao" widgetVar="dlgEdicao" modal="true"
+				header="Edição">
+
+				<p:outputPanel id="otptPnlEdicao">
+
+					<p:panelGrid styleClass="ui-noborder"
+						style="ui-panelgrid-blank;margin-top:0px">
+
+						<p:row>
+
+							<p:column>Edição:
+						</p:column>
+							<p:column>
+								<p:inputText styleClass="iptNome"
+									value="#{cadastrosEdicoesView.edicao}" />
+							</p:column>
+
+						</p:row>
+
+					</p:panelGrid>
+
+					<p:toolbar
+						style="padding-top:4px;padding-right: 8px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
+
+						<f:facet name="right">
+
+							<p:commandButton title="Salvar" value="Salvar"
+								icon="ui-icon-disk"
+								actionListener="#{cadastrosEdicoesView.salvar}"
+								update="growl otptPnlLista"
+								oncomplete="handleSalvarRequest(xhr, status, args)" />
+
+						</f:facet>
+
+					</p:toolbar>
+
+				</p:outputPanel>
+
+			</p:dialog>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+				<p:toolbar
+					style="padding-top:4px;padding-right: 0px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
+
+					<f:facet name="right">
+
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+					</f:facet>
+
+				</p:toolbar>
+
+			</p:confirmDialog>
+
+		</h:form>
+
+		<script type="text/javascript">
+			function handleSalvarRequest(xhr, status, args) {
+				if (args.validationFailed || !args.salvo) {
+					PF('dlgEdicao').jq.effect("shake", {
+						times : 5
+					}, 100);
+				} else {
+					PF('dlgEdicao').hide();
+				}
+			}
+		</script>
+
+	</ui:define>
+
+</ui:composition>
