@@ -10,12 +10,12 @@
 	template="WEB-INF/template/biblioteca.xhtml">
 
 	<ui:define name="titulo">
-		<p:outputLabel value="Cadastro de editoras" />
+		<p:outputLabel value="Cadastro de assuntos" />
 	</ui:define>
 
 	<ui:define name="conteudo">
 
-		<h:form id="frmCadastrosEditoras">
+		<h:form id="frmCadastrosAssuntos">
 
 			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
@@ -23,11 +23,11 @@
 
 				<f:facet name="left">
 
-					<p:commandButton value="Incluir nova editora"
-						title="Incluir um nova editora." icon="ui-icon-document"
-						onclick="PF('dlgEditora').show()"
-						actionListener="#{cadastrosEditorasView.novo}"
-						update="otptPnlEditora" />
+					<p:commandButton value="Incluir novo assunto"
+						title="Incluir um novo assunto." icon="ui-icon-document"
+						onclick="PF('dlgAssunto').show()"
+						actionListener="#{cadastrosAssuntosView.novo}"
+						update="otptPnlAssunto" />
 
 				</f:facet>
 
@@ -38,13 +38,13 @@
 					</span>
 
 
-					<p:inputText id="iptNomeFantasia"
-						value="#{cadastrosEditorasView.nomeFantasiaFiltro}" styleClass="iptNome"
-						title="Pesquisar editoras pelo nome fantasia." /> &nbsp;
-					<p:watermark for="iptNomeFantasia" value="Nome fantasia da editora" />
+					<p:inputText id="iptAssunto"
+						value="#{cadastrosAssuntosView.assuntoFiltro}" styleClass="iptNome"
+						title="Pesquisar por assunto." /> &nbsp;
+					<p:watermark for="iptAssunto" value="Assunto" />
 
 					<p:commandButton value="Pesquisar"
-						actionListener="#{cadastrosEditorasView.consultar}"
+						actionListener="#{cadastrosAssuntosView.consultar}"
 						update="growl otptPnlLista" icon="ui-icon-search" />
 
 				</f:facet>
@@ -55,37 +55,37 @@
 
 			<p:outputPanel id="otptPnlLista">
 
-				<p:dataTable id="dttblLista" value="#{cadastrosEditorasView.editoras}"
-					var="editora" selectionMode="single" rowKey="#{editora.id}"
+				<p:dataTable id="dttblLista" value="#{cadastrosAssuntosView.assuntos}"
+					var="assunto" selectionMode="single" rowKey="#{assunto.id}"
 					resizableColumns="true"
-					rendered="#{cadastrosEditorasView.editoras != null and not empty cadastrosEditorasView.editoras}">
+					rendered="#{cadastrosAssuntosView.assuntos != null and not empty cadastrosAssuntosView.assuntos}">
 
 					<p:column style="width:10%;text-align:center">
 						<f:facet name="header">
 							<h:outputText value="Código" />
 						</f:facet>
-						<h:outputText value="#{editora.id}" />
+						<h:outputText value="#{assunto.id}" />
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Nome fantasia" />
+							<h:outputText value="Assunto" />
 						</f:facet>
-						<h:outputText value="#{editora.nomeFantasia}" />
+						<h:outputText value="#{assunto.assunto}" />
 					</p:column>
 
 					<p:column styleClass="cl-dt-btn">
 
-						<p:commandButton title="Editar uma editora selecionada."
+						<p:commandButton title="Editar um assunto."
 							icon="ui-icon-pencil" styleClass="btn-dt"
-							onclick="PF('dlgEditora').show()"
-							actionListener="#{cadastrosEditorasView.editar(editora)}"
-							update=":frmCadastrosEditoras:otptPnlEditora" />
+							onclick="PF('dlgAssunto').show()"
+							actionListener="#{cadastrosAssuntosView.editar(assunto)}"
+							update=":frmCadastrosAssuntos:otptPnlAssunto" />
 
-						<p:commandButton title="Excluir uma editora selecionada."
+						<p:commandButton title="Excluir um assunto selecionada."
 							icon="ui-icon-trash" styleClass="btn-dt"
-							actionListener="#{cadastrosEditorasView.excluir(editora)}"
-							update=":frmCadastrosEditoras:otptPnlLista">
+							actionListener="#{cadastrosAssuntosView.excluir(assunto)}"
+							update=":frmCadastrosAssuntos:otptPnlLista">
 
 							<p:confirm header="Confirmação"
 								message="Deseja realmente excluir o registro?"
@@ -99,21 +99,21 @@
 
 			</p:outputPanel>
 
-			<p:dialog id="dlgEditora" widgetVar="dlgEditora" modal="true"
-				header="Editora">
+			<p:dialog id="dlgAssunto" widgetVar="dlgAssunto" modal="true"
+				header="Assunto">
 
-				<p:outputPanel id="otptPnlEditora">
+				<p:outputPanel id="otptPnlAssunto">
 
 					<p:panelGrid styleClass="ui-noborder"
 						style="ui-panelgrid-blank;margin-top:0px">
 
 						<p:row>
 
-							<p:column>Nome fantasia:
+							<p:column>Assunto:
 						</p:column>
 							<p:column>
 								<p:inputText styleClass="iptNome"
-									value="#{cadastrosEditorasView.nomeFantasia}" />
+									value="#{cadastrosAssuntosView.assunto}" />
 							</p:column>
 
 						</p:row>
@@ -127,7 +127,7 @@
 
 							<p:commandButton title="Salvar" value="Salvar"
 								icon="ui-icon-disk"
-								actionListener="#{cadastrosEditorasView.salvar}"
+								actionListener="#{cadastrosAssuntosView.salvar}"
 								update="growl otptPnlLista"
 								oncomplete="handleSalvarRequest(xhr, status, args)" />
 
@@ -162,11 +162,11 @@
 		<script type="text/javascript">
 			function handleSalvarRequest(xhr, status, args) {
 				if (args.validationFailed || !args.salvo) {
-					PF('dlgEditora').jq.effect("shake", {
+					PF('dlgAssunto').jq.effect("shake", {
 						times : 5
 					}, 100);
 				} else {
-					PF('dlgEditora').hide();
+					PF('dlgAssunto').hide();
 				}
 			}
 		</script>
