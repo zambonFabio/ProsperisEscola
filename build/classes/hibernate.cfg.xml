@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+ "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+ "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- properties -->
+		<property name="connection.driver_class">
+			org.postgresql.Driver
+		</property>
+
+		<property name="connection.url">
+			jdbc:postgresql://localhost:5432/escola
+		</property>
+
+		<property name="dialect">
+			org.hibernate.dialect.PostgreSQLDialect
+		</property>
+
+		<property name="connection.username">postgres</property>
+		<property name="connection.password">R@faela2563142</property>
+		<property name="hibenate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="connection.pool_size">10</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+
+		<!-- mapping classes -->
+		<mapping class="modelo.Ano" />
+		<mapping class="modelo.Assunto" />
+		<mapping class="modelo.Pessoa" />
+		<mapping class="modelo.PessoaFisica" />
+		<mapping class="modelo.Autor" />
+		<mapping class="modelo.PessoaJuridica" />
+		<mapping class="modelo.Edicao" />
+		<mapping class="modelo.Editora" />
+
+	</session-factory>
+</hibernate-configuration>

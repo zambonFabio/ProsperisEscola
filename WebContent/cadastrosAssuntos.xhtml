@@ -10,7 +10,7 @@
 	template="WEB-INF/template/biblioteca.xhtml">
 
 	<ui:define name="titulo">
-		<p:outputLabel value="Cadastro de assuntos" />
+		<p:outputLabel value="Cadastro de assuntos" styleClass="menu-titulo"/>
 	</ui:define>
 
 	<ui:define name="conteudo">
@@ -39,7 +39,7 @@
 
 
 					<p:inputText id="iptAssunto"
-						value="#{cadastrosAssuntosView.assuntoFiltro}" styleClass="iptNome"
+						value="#{cadastrosAssuntosView.assuntoFiltro}" styleClass="iptPesquisar"
 						title="Pesquisar por assunto." /> &nbsp;
 					<p:watermark for="iptAssunto" value="Assunto" />
 
@@ -50,8 +50,6 @@
 				</f:facet>
 
 			</p:toolbar>
-
-			<p></p>
 
 			<p:outputPanel id="otptPnlLista">
 
@@ -67,7 +65,7 @@
 						<h:outputText value="#{assunto.id}" />
 					</p:column>
 
-					<p:column>
+					<p:column style="width:80%">
 						<f:facet name="header">
 							<h:outputText value="Assunto" />
 						</f:facet>

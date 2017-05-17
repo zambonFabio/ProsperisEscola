@@ -10,7 +10,7 @@
 	template="WEB-INF/template/biblioteca.xhtml">
 
 	<ui:define name="titulo">
-		<p:outputLabel value="Cadastro de anos" />
+		<p:outputLabel value="Cadastro de anos" styleClass="menu-titulo" />
 	</ui:define>
 
 	<ui:define name="conteudo">
@@ -45,8 +45,6 @@
 
 			</p:toolbar>
 
-			<p></p>
-
 			<p:outputPanel id="otptPnlLista">
 
 				<p:dataTable id="dttblLista" value="#{cadastrosAnosView.anos}"
@@ -63,12 +61,12 @@
 
 					<p:column style="width:80%;text-align:center">
 						<f:facet name="header">
-							<h:outputText value="Código" />
+							<h:outputText value="Ano" />
 						</f:facet>
 						<h:outputText value="#{ano.ano}" />
 					</p:column>
 
-					<p:column styleClass="cl-dt-btn">
+					<p:column styleClass="cl-dt-btn" style="text-align:center">
 
 						<p:commandButton title="Editar um ano selecionado."
 							icon="ui-icon-pencil" styleClass="btn-dt"

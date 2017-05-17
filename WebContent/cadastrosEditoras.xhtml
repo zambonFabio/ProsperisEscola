@@ -10,7 +10,7 @@
 	template="WEB-INF/template/biblioteca.xhtml">
 
 	<ui:define name="titulo">
-		<p:outputLabel value="Cadastro de editoras" />
+		<p:outputLabel value="Cadastro de editoras" styleClass="menu-titulo"/>
 	</ui:define>
 
 	<ui:define name="conteudo">
@@ -39,7 +39,7 @@
 
 
 					<p:inputText id="iptNomeFantasia"
-						value="#{cadastrosEditorasView.nomeFantasiaFiltro}" styleClass="iptNome"
+						value="#{cadastrosEditorasView.nomeFantasiaFiltro}" styleClass="iptPesquisar"
 						title="Pesquisar editoras pelo nome fantasia." /> &nbsp;
 					<p:watermark for="iptNomeFantasia" value="Nome fantasia da editora" />
 
@@ -50,8 +50,6 @@
 				</f:facet>
 
 			</p:toolbar>
-
-			<p></p>
 
 			<p:outputPanel id="otptPnlLista">
 
@@ -67,7 +65,7 @@
 						<h:outputText value="#{editora.id}" />
 					</p:column>
 
-					<p:column>
+					<p:column style="width:80%">
 						<f:facet name="header">
 							<h:outputText value="Nome fantasia" />
 						</f:facet>

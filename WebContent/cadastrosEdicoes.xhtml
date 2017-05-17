@@ -10,7 +10,7 @@
 	template="WEB-INF/template/biblioteca.xhtml">
 
 	<ui:define name="titulo">
-		<p:outputLabel value="Cadastro de edicoes" />
+		<p:outputLabel value="Cadastro de edições" styleClass="menu-titulo"/>
 	</ui:define>
 
 	<ui:define name="conteudo">
@@ -37,9 +37,8 @@
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
-
 					<p:inputText id="iptEdicao"
-						value="#{cadastrosEdicoesView.edicaoFiltro}" styleClass="iptNome"
+						value="#{cadastrosEdicoesView.edicaoFiltro}" styleClass="iptPesquisar"
 						title="Pesquisar por edição." /> &nbsp;
 					<p:watermark for="iptEdicao" value="Edição" />
 
@@ -50,8 +49,6 @@
 				</f:facet>
 
 			</p:toolbar>
-
-			<p></p>
 
 			<p:outputPanel id="otptPnlLista">
 
@@ -67,7 +64,7 @@
 						<h:outputText value="#{edicao.id}" />
 					</p:column>
 
-					<p:column>
+					<p:column style="width:80%">
 						<f:facet name="header">
 							<h:outputText value="Edicao" />
 						</f:facet>

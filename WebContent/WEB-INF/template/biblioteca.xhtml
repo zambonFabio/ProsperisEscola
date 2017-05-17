@@ -18,37 +18,85 @@
 	font-size: 12px;
 }
 
-.ui-menu.ui-menubar {
-	height: 22px;
-	padding-top: 0px;
-	padding-right: 20px;
-	padding-left: 10px;
+.div-menu {
+	background-color: #3c8dbc;
+	margin-top: -8px;
+	margin-left: -8px;
+	margin-right: -8px;
+	border: none;
+	min-height: 50px;
+	border-radius: 0;
+	padding-top: 12px;
+	padding-left: 8px;
 }
 
-.ui-fieldset, .ui-fieldset .ui-fieldset-legend {
-	padding: .6em 1em;
-}
-
-.ui-outputlabel {
+.menu-titulo {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 20px;
-	color: #5e9c9e;
+	vertical-align: super;
+	color: whitesmoke;
+	padding-left: 8px;
 }
 
-.ui-widget-header .ui-state-default {
+.conteudo {
+	left: 50%;
+	margin-left: -350px;
+	position: absolute;
+	width: 700px;
+	margin-top: 8px;
+}
+
+.ui-menu.ui-widget {
+	border-radius: 0px;
+}
+
+.ui-helper-reset {
+	font-size: 14px;
+}
+
+.ui-menu.ui-widget .ui-menu-list .ui-widget-header {
+	font-size: 16px;
+	background-color: #149bdf;
+	color: #f9f9f9;
+}
+
+.ui-toolbar.ui-widget-header {
+	background-image: linear-gradient(to bottom, #00c6c7, #00c6c7);
 	border: 0px;
+	border-radius: 0px;
+	height: 30px;
 }
 
-.cl-dt-btn {
-	width: 60px;
-	text-align: center;
-}
-
-.cl-dt-btn .btn-dt {
+.ui-state-default, .ui-widget-content .ui-state-default,
+	.ui-widget-header .ui-state-default {
 	border: 0px;
+	border-radius: 0px;
+	height: 30px;
+	color: #4c4c4c;
 }
 
-.iptNome {
-	width: 300px;
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th {
+    border-color: #e8dfdf;
+    height: 30px;
+    color: #4c4c4c;
+}
+
+.ui-dialog.ui-widget-content .ui-dialog-titlebar {
+    padding: 9px 15px;
+    border-bottom: 0px;
+    background-color: #0480be;
+    border-radius: 0px;
+    color: whitesmoke;
+}
+
+.ui-dialog.ui-widget-content {
+border-radius: 0px;
+}
+
+.iptPesquisar {
+	padding-bottom: 0px;
+	padding-top: 0px;
+	min-width: 200px;
 }
 
 </style>
@@ -67,22 +115,34 @@
 
 	<h:form>
 
-		<p:menubar>
-			<p:submenu label="Cadastros">
-				<p:menuitem value="Anos" outcome="/cadastrosAnos" />
-				<p:menuitem value="Assuntos" outcome="/cadastrosAssuntos" />
-				<p:menuitem value="Autores" outcome="/cadastrosAutores" />
-				<p:menuitem value="Edições" outcome="/cadastrosEdicoes" />
-				<p:menuitem value="Editoras" outcome="/cadastrosEditoras" />
-			</p:submenu>
-		</p:menubar>
+		<div class="div-menu">
+
+			<h:outputLink id="lkMenu" title="Menu">
+				<p:graphicImage library="imagens" name="menu.png" />
+			</h:outputLink>
+
+			<ui:insert name="titulo" styleclass="menu-titulo" />
+
+			<p:menu overlay="true" trigger="lkMenu" my="left top"
+				at="left bottom">
+
+				<p:submenu label="Cadastros">
+					<p:menuitem value="Anos" outcome="/cadastrosAnos" />
+					<p:menuitem value="Assuntos" outcome="/cadastrosAssuntos" />
+					<p:menuitem value="Autores" outcome="/cadastrosAutores" />
+					<p:menuitem value="Edições" outcome="/cadastrosEdicoes" />
+					<p:menuitem value="Editoras" outcome="/cadastrosEditoras" />
+				</p:submenu>
+
+			</p:menu>
+
+		</div>
 
 	</h:form>
 
-	<p></p>
-	<ui:insert name="titulo" />
-	<p></p>
-	<ui:insert name="conteudo" />
+	<div class="conteudo">
+		<ui:insert name="conteudo" />
+	</div>
 
 </h:body>
 

@@ -10,7 +10,7 @@
 	template="WEB-INF/template/biblioteca.xhtml">
 
 	<ui:define name="titulo">
-		<p:outputLabel value="Cadastro de autores" />
+		<p:outputLabel value="Cadastro de autores" styleClass="menu-titulo"/>
 	</ui:define>
 
 	<ui:define name="conteudo">
@@ -39,7 +39,7 @@
 
 
 					<p:inputText id="iptNome"
-						value="#{cadastrosAutoresView.nomeFiltro}" styleClass="iptNome"
+						value="#{cadastrosAutoresView.nomeFiltro}" styleClass="iptPesquisar"
 						title="Pesquisar autores pelo nome." /> &nbsp;
 					<p:watermark for="iptNome" value="Nome do autor" />
 
@@ -50,8 +50,6 @@
 				</f:facet>
 
 			</p:toolbar>
-
-			<p></p>
 
 			<p:outputPanel id="otptPnlLista">
 
@@ -67,7 +65,7 @@
 						<h:outputText value="#{autor.id}" />
 					</p:column>
 
-					<p:column>
+					<p:column style="width:80%">
 						<f:facet name="header">
 							<h:outputText value="Nome" />
 						</f:facet>
