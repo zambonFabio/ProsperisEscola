@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="WEB-INF/template/biblioteca.xhtml">
+
+	<ui:define name="titulo">
+		<p:outputLabel value="Cadastro de idiomas" styleClass="menu-titulo" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="frmCadastrosIdiomas">
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+			<p:toolbar>
+
+				<f:facet name="left">
+
+					<p:commandButton value="Incluir novo idioma"
+						title="Incluir um novo idioma." icon="ui-icon-document"
+						onclick="PF('dlgIdioma').show()"
+						actionListener="#{cadastrosIdiomasView.novo}"
+						update="otptPnlIdioma" />
+
+				</f:facet>
+
+				<f:facet name="right">
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+
+					<p:inputText id="iptIdioma"
+						value="#{cadastrosIdiomasView.idiomaFiltro}"
+						styleClass="iptPesquisar" title="Pesquisar por idioma." /> &nbsp;
+					<p:watermark for="iptIdioma" value="Idioma" />
+
+					<p:commandButton value="Pesquisar"
+						actionListener="#{cadastrosIdiomasView.consultar}"
+						update="growl otptPnlLista" icon="ui-icon-search" />
+
+				</f:facet>
+
+			</p:toolbar>
+
+			<p:outputPanel id="otptPnlLista">
+
+				<p:dataTable id="dttblLista" value="#{cadastrosIdiomasView.idiomas}"
+					var="idioma" selectionMode="single" rowKey="#{idioma.id}"
+					resizableColumns="true"
+					rendered="#{cadastrosIdiomasView.idiomas != null and not empty cadastrosIdiomasView.idiomas}">
+
+					<p:column style="width:10%;text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{idioma.id}" />
+					</p:column>
+
+					<p:column style="width:80%">
+						<f:facet name="header">
+							<h:outputText value="Idioma" />
+						</f:facet>
+						<h:outputText value="#{idioma.idioma}" />
+					</p:column>
+
+					<p:column styleClass="cl-dt-btn">
+
+						<p:commandButton title="Editar um idioma." icon="ui-icon-pencil"
+							styleClass="btn-dt" onclick="PF('dlgIdioma').show()"
+							actionListener="#{cadastrosIdiomasView.editar(idioma)}"
+							update=":frmCadastrosIdiomas:otptPnlIdioma" />
+
+						<p:commandButton title="Excluir um idioma selecionada."
+							icon="ui-icon-trash" styleClass="btn-dt"
+							actionListener="#{cadastrosIdiomasView.excluir(idioma)}"
+							update=":frmCadastrosIdiomas:otptPnlLista">
+
+							<p:confirm header="Confirmação"
+								message="Deseja realmente excluir o registro?"
+								icon="ui-icon-alert" />
+
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:outputPanel>
+
+			<p:dialog id="dlgIdioma" widgetVar="dlgIdioma" modal="true"
+				header="Idioma">
+
+				<p:outputPanel id="otptPnlIdioma">
+
+					<p:panelGrid styleClass="ui-noborder"
+						style="ui-panelgrid-blank;margin-top:0px">
+
+						<p:row>
+
+							<p:column>Idioma:
+						</p:column>
+							<p:column>
+								<p:inputText styleClass="iptNome"
+									value="#{cadastrosIdiomasView.idioma}" />
+							</p:column>
+
+						</p:row>
+
+					</p:panelGrid>
+
+					<p:toolbar
+						style="padding-top:4px;padding-right: 8px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
+
+						<f:facet name="right">
+
+							<p:commandButton title="Salvar" value="Salvar"
+								icon="ui-icon-disk"
+								actionListener="#{cadastrosIdiomasView.salvar}"
+								update="growl otptPnlLista"
+								oncomplete="handleSalvarRequest(xhr, status, args)" />
+
+						</f:facet>
+
+					</p:toolbar>
+
+				</p:outputPanel>
+
+			</p:dialog>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+				<p:toolbar
+					style="padding-top:4px;padding-right: 0px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
+
+					<f:facet name="right">
+
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+					</f:facet>
+
+				</p:toolbar>
+
+			</p:confirmDialog>
+
+		</h:form>
+
+		<script type="text/javascript">
+			function handleSalvarRequest(xhr, status, args) {
+				if (args.validationFailed || !args.salvo) {
+					PF('dlgIdioma').jq.effect("shake", {
+						times : 5
+					}, 100);
+				} else {
+					PF('dlgIdioma').hide();
+				}
+			}
+		</script>
+
+	</ui:define>
+
+</ui:composition>

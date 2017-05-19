@@ -37,6 +37,8 @@
 		<mapping class="modelo.PessoaJuridica" />
 		<mapping class="modelo.Edicao" />
 		<mapping class="modelo.Editora" />
+		<mapping class="modelo.Idioma" />
+		<mapping class="modelo.TipoDeCapa" />
 
 	</session-factory>
 </hibernate-configuration>

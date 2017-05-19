@@ -51,7 +51,7 @@ public class CadastrosAnosView implements Serializable{
 
 	public void novo() {
 		this.setId(null);
-		this.setAno(0);
+		this.ano = null;
 	}
 
 	public void salvar() throws ExecutionException {
