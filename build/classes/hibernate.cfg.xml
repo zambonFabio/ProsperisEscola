@@ -39,6 +39,7 @@
 		<mapping class="modelo.Editora" />
 		<mapping class="modelo.Idioma" />
 		<mapping class="modelo.TipoDeCapa" />
+		<mapping class="modelo.TipoDeCapaDeLivro"/>
 
 	</session-factory>
 </hibernate-configuration>
