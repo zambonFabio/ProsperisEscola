@@ -58,14 +58,7 @@
 					resizableColumns="true"
 					rendered="#{cadastrosAssuntosView.assuntos != null and not empty cadastrosAssuntosView.assuntos}">
 
-					<p:column style="width:10%;text-align:center">
-						<f:facet name="header">
-							<h:outputText value="Código" />
-						</f:facet>
-						<h:outputText value="#{assunto.id}" />
-					</p:column>
-
-					<p:column style="width:80%">
+					<p:column style="width:90%">
 						<f:facet name="header">
 							<h:outputText value="Assunto" />
 						</f:facet>

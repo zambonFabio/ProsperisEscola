@@ -19,7 +19,7 @@ public class Edicao implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "edicao_sequence")
 	@SequenceGenerator(name = "edicao_sequence", sequenceName = "edicao_sequence", allocationSize = 1)
-	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = true)
+	@Column(name = "id_edicao", unique = true, nullable = false, insertable = true, updatable = true)
 	private Integer id;
 
 	@Column(name = "edicao", unique = true, nullable = false, insertable = true, updatable = true, length = 100)

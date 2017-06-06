@@ -19,7 +19,7 @@ public class Idioma implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idioma_sequence")
 	@SequenceGenerator(name = "idioma_sequence", sequenceName = "idioma_sequence", allocationSize = 1)
-	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = true)
+	@Column(name = "id_idioma", unique = true, nullable = false, insertable = true, updatable = true)
 	private Integer id;
 
 	@Column(name = "idioma", unique = true, nullable = false, insertable = true, updatable = true, length = 100)

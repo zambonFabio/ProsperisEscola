@@ -22,7 +22,7 @@ public class Pessoa implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoa_sequence")
 	@SequenceGenerator(name = "pessoa_sequence", sequenceName = "pessoa_sequence", allocationSize = 1)
-	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = true)
+	@Column(name = "id_pessoa", unique = true, nullable = false, insertable = true, updatable = true)
 	private Integer id;
 
 	public Pessoa() {

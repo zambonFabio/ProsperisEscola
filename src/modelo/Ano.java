@@ -19,7 +19,7 @@ public class Ano implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ano_sequence")
 	@SequenceGenerator(name = "ano_sequence", sequenceName = "ano_sequence", allocationSize = 1)
-	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = true)
+	@Column(name = "id_ano", unique = true, nullable = false, insertable = true, updatable = true)
 	private Integer id;
 	
 	@Column(name = "ano", unique = true, nullable = false, insertable = true, updatable = true)

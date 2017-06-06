@@ -46,10 +46,6 @@
 	margin-top: 8px;
 }
 
-.ui-menu.ui-widget {
-	border-radius: 0px;
-}
-
 .ui-helper-reset {
 	font-size: 14px;
 }
@@ -58,13 +54,6 @@
 	font-size: 16px;
 	background-color: #149bdf;
 	color: #f9f9f9;
-}
-
-.ui-toolbar.ui-widget-header {
-	background-image: linear-gradient(to bottom, #00c6c7, #00c6c7);
-	border: 0px;
-	border-radius: 0px;
-	height: 30px;
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default,
@@ -81,22 +70,19 @@
     color: #4c4c4c;
 }
 
-.ui-dialog.ui-widget-content .ui-dialog-titlebar {
-    padding: 9px 15px;
-    border-bottom: 0px;
-    background-color: #0480be;
-    border-radius: 0px;
-    color: whitesmoke;
-}
-
-.ui-dialog.ui-widget-content {
-border-radius: 0px;
-}
+ .ui-dialog.ui-widget-content .ui-dialog-titlebar { 
+     padding: 9px 15px; 
+     border-bottom: 0px; 
+     background-color: #0480be; 
+     color: whitesmoke; 
+ } 
 
 .iptPesquisar {
-	padding-bottom: 0px;
-	padding-top: 0px;
 	min-width: 200px;
+}
+
+.iptImputLivro{
+	min-width: 400px;
 }
 
 </style>
@@ -133,6 +119,7 @@ border-radius: 0px;
 					<p:menuitem value="Edições" outcome="/cadastrosEdicoes" />
 					<p:menuitem value="Editoras" outcome="/cadastrosEditoras" />
 					<p:menuitem value="Idiomas" outcome="/cadastrosIdiomas" />
+					<p:menuitem value="Livros" outcome="/cadastrosLivros" />
 					<p:menuitem value="Tipos de capas de livros" outcome="/cadastrosTiposDeCapasDeLivros"/>
 				</p:submenu>
 

@@ -19,7 +19,7 @@ public class Assunto implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "assunto_sequence")
 	@SequenceGenerator(name = "assunto_sequence", sequenceName = "assunto_sequence", allocationSize = 1)
-	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = true)
+	@Column(name = "id_assunto", unique = true, nullable = false, insertable = true, updatable = true)
 	private Integer id;
 
 	@Column(name = "assunto", unique = true, nullable = false, insertable = true, updatable = true, length = 100)

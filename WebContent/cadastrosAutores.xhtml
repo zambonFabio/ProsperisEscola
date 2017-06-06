@@ -22,7 +22,7 @@
 			<p:toolbar>
 
 				<f:facet name="left">
-
+						
 					<p:commandButton value="Incluir novo autor"
 						title="Incluir um novo autor." icon="ui-icon-document"
 						onclick="PF('dlgAutor').show()"
@@ -58,14 +58,7 @@
 					resizableColumns="true"
 					rendered="#{cadastrosAutoresView.autores != null and not empty cadastrosAutoresView.autores}">
 
-					<p:column style="width:10%;text-align:center">
-						<f:facet name="header">
-							<h:outputText value="Código" />
-						</f:facet>
-						<h:outputText value="#{autor.id}" />
-					</p:column>
-
-					<p:column style="width:80%">
+					<p:column style="width:90%">
 						<f:facet name="header">
 							<h:outputText value="Nome" />
 						</f:facet>

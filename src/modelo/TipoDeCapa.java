@@ -19,7 +19,7 @@ public class TipoDeCapa implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tipo_de_capa_sequence")
 	@SequenceGenerator(name = "tipo_de_capa_sequence", sequenceName = "tipo_de_capa_sequence", allocationSize = 1)
-	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = true)
+	@Column(name = "id_tipo_de_capa", unique = true, nullable = false, insertable = true, updatable = true)
 	private Integer id;
 
 	@Column(name = "tipo_de_capa", unique = true, nullable = false, insertable = true, updatable = true, length = 100)

@@ -40,6 +40,7 @@
 		<mapping class="modelo.Idioma" />
 		<mapping class="modelo.TipoDeCapa" />
 		<mapping class="modelo.TipoDeCapaDeLivro"/>
+		<mapping class="modelo.Livro" />
 
 	</session-factory>
 </hibernate-configuration>
