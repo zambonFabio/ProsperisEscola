@@ -29,8 +29,8 @@ public class CadastrosLivrosView implements Serializable {
 
 	private Integer id;
 	private String titulo;
-	private Integer codigoDeBarras;
-	private Integer isbn;
+	private Long codigoDeBarras;
+	private Long isbn;
 	private Integer numeroDePaginas;
 	private String informacoes;
 	private Boolean ativo;
@@ -53,7 +53,12 @@ public class CadastrosLivrosView implements Serializable {
 
 		livros.clear();
 
-		String consulta = "select new modelo.Livro(a.id, a.titulo, a.codigoDeBarras, a.isbn, a.numeroDePaginas, a.informacoes, a.ativo, a.editora) "
+		String consulta = "select new modelo.Livro(a.id, a.titulo, " + 
+		                                          "a.codigoDeBarras, " + 
+				                                  "a.isbn, " + 
+		                                          "a.numeroDePaginas, " + 
+				                                  "a.informacoes, " + 
+		                                          "a.ativo) "
 				+ "from modelo.Livro a where a.titulo like '%" + getTituloFiltro() + "%' order by a.titulo";
 
 		livros = operacao.queryList(consulta);
@@ -91,6 +96,7 @@ public class CadastrosLivrosView implements Serializable {
 		this.numeroDePaginas = null;
 		this.informacoes = null;
 		this.ativo = true;
+		this.editora = null;
 	}
 
 	public void salvar() throws ExecutionException {
@@ -142,6 +148,7 @@ public class CadastrosLivrosView implements Serializable {
 		this.setNumeroDePaginas(livro.getNumeroDePaginas());
 		this.setInformacoes(livro.getInformacoes());
 		this.setAtivo(livro.getAtivo());
+		this.setEditora(livro.getEditora());
 	}
 
 	public void excluir(Livro livro) throws ExecutionException {
@@ -182,19 +189,19 @@ public class CadastrosLivrosView implements Serializable {
 		this.titulo = titulo;
 	}
 
-	public Integer getCodigoDeBarras() {
+	public Long getCodigoDeBarras() {
 		return codigoDeBarras;
 	}
 
-	public void setCodigoDeBarras(Integer codigoDeBarras) {
+	public void setCodigoDeBarras(Long codigoDeBarras) {
 		this.codigoDeBarras = codigoDeBarras;
 	}
 
-	public Integer getIsbn() {
+	public Long getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(Integer isbn) {
+	public void setIsbn(Long isbn) {
 		this.isbn = isbn;
 	}
 

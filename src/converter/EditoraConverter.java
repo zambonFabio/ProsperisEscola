@@ -1,10 +1,13 @@
 package converter;
 
+import java.util.List;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import conexao.ImplementacaoOperacoes;
 import modelo.Editora;
 import util.Utilitario;
 
@@ -21,6 +24,19 @@ public class EditoraConverter implements Converter<Editora> {
 			try {
 				
 				Integer id = Integer.parseInt(value);
+				
+				List<Editora> editoras = null;
+				
+				String consulta = "select new modelo.Editora(a.id, a.nomeFantasia) " + 
+				                  "from modelo.Editora a " + 
+				                  "where a.id = " + id;
+				
+				ImplementacaoOperacoes<Editora> operacao = new ImplementacaoOperacoes<Editora>();
+				
+				editoras = operacao.queryList(consulta);
+				
+				result = editoras.get(0);
+				
 				
 			} catch (NumberFormatException e) {
 				Utilitario.message("error", "Erro", "Erro ao converter identificador da editora: " + e.getMessage());

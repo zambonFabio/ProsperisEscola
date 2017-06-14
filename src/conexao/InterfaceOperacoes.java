@@ -17,5 +17,4 @@ public interface InterfaceOperacoes<T> extends Serializable {
 	// consulta dados
 	List<T> queryList(String consulta) throws Exception;
 
-
 }

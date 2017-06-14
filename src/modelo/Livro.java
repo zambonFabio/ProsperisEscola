@@ -29,14 +29,15 @@ public class Livro implements Serializable {
 	private String titulo;
 
 	@Column(name = "codigo_de_barras", insertable = true, updatable = true)
-	private Integer codigoDeBarras;
+	private Long codigoDeBarras;
 
 	@Column(name = "isbn", insertable = true, updatable = true)
-	private Integer isbn;
+	private Long isbn;
 
 	@Column(name = "numero_de_paginas", insertable = true, updatable = true)
 	private Integer numeroDePaginas;
 
+	@Lob
 	@Column(name = "informacoes", insertable = true, updatable = true)
 	private String informacoes;
 
@@ -55,12 +56,12 @@ public class Livro implements Serializable {
 
 	public Livro(Integer id, 
 			     String titulo, 
-			     Integer codigoDeBarras, 
-			     Integer isbn, 
+			     Long codigoDeBarras, 
+			     Long isbn, 
 			     Integer numeroDePaginas,
 			     String informacoes, 
-			     Boolean ativo, 
-			     Editora editora) {
+			     Boolean ativo) {
+		
 		this.id = id;
 		this.titulo = titulo;
 		this.codigoDeBarras = codigoDeBarras;
@@ -68,7 +69,7 @@ public class Livro implements Serializable {
 		this.numeroDePaginas = numeroDePaginas;
 		this.informacoes = informacoes;
 		this.ativo = ativo;
-		this.editora.setId(editora.getId());
+		
 	}
 
 	public Integer getId() {
@@ -87,19 +88,19 @@ public class Livro implements Serializable {
 		this.titulo = titulo;
 	}
 
-	public Integer getCodigoDeBarras() {
+	public Long getCodigoDeBarras() {
 		return codigoDeBarras;
 	}
 
-	public void setCodigoDeBarras(Integer codigoDeBarras) {
+	public void setCodigoDeBarras(Long codigoDeBarras) {
 		this.codigoDeBarras = codigoDeBarras;
 	}
 
-	public Integer getIsbn() {
+	public Long getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(Integer isbn) {
+	public void setIsbn(Long isbn) {
 		this.isbn = isbn;
 	}
 
