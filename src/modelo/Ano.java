@@ -25,15 +25,6 @@ public class Ano implements Serializable{
 	@Column(name = "ano", unique = true, nullable = false, insertable = true, updatable = true)
 	private Integer ano;
 
-	public Ano() {
-
-	}
-
-	public Ano(Integer id, Integer ano) {
-		this.id = id;
-		this.ano = ano;
-	}
-
 	public Integer getId() {
 		return id;
 	}

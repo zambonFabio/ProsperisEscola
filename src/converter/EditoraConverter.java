@@ -27,8 +27,7 @@ public class EditoraConverter implements Converter<Editora> {
 				
 				List<Editora> editoras = null;
 				
-				String consulta = "select new modelo.Editora(a.id, a.nomeFantasia) " + 
-				                  "from modelo.Editora a " + 
+				String consulta = "from Editora a " + 
 				                  "where a.id = " + id;
 				
 				ImplementacaoOperacoes<Editora> operacao = new ImplementacaoOperacoes<Editora>();

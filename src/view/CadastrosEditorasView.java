@@ -43,8 +43,10 @@ public class CadastrosEditorasView implements Serializable {
 	public void consultar() throws ExecutionException {
 
 		editoras.clear();
-		String consulta = "select new modelo.Editora(a.id, a.nomeFantasia) from modelo.Editora a where a.nomeFantasia like '%"
-				+ getNomeFantasiaFiltro() + "%' order by a.nomeFantasia";
+
+		String consulta = "from Editora a " +
+						  "where upper(a.nomeFantasia) like '%" + getNomeFantasiaFiltro().toUpperCase() + "%' " +
+						  "order by a.nomeFantasia";
 
 		editoras = operacao.queryList(consulta);
 		

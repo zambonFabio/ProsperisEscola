@@ -25,15 +25,6 @@ public class Idioma implements Serializable{
 	@Column(name = "idioma", unique = true, nullable = false, insertable = true, updatable = true, length = 100)
 	private String idioma;
 
-	public Idioma() {
-
-	}
-
-	public Idioma(Integer id, String idioma) {
-		this.id = id;
-		this.idioma = idioma;
-	}
-
 	public Integer getId() {
 		return id;
 	}

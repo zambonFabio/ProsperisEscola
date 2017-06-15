@@ -38,7 +38,7 @@ public class CadastrosAnosView implements Serializable{
 	public void consultar() throws ExecutionException {
 
 		anos.clear();
-		String consulta = "select new modelo.Ano(a.id, a.ano) from modelo.Ano a order by a.ano";
+		String consulta = "from Ano a order by a.ano";
 
 		anos = operacao.queryList(consulta);
 		

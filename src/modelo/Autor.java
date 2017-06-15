@@ -11,13 +11,4 @@ public class Autor extends PessoaFisica {
 
 	private static final long serialVersionUID = 1L;
 
-	public Autor() {
-
-	}
-
-	public Autor(Integer id, String nome) {
-		setId(id);
-		setNome(nome);
-	}
-
 }

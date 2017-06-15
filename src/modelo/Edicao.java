@@ -25,15 +25,6 @@ public class Edicao implements Serializable{
 	@Column(name = "edicao", unique = true, nullable = false, insertable = true, updatable = true, length = 100)
 	private String edicao;
 
-	public Edicao() {
-
-	}
-
-	public Edicao(Integer id, String edicao) {
-		this.id = id;
-		this.edicao = edicao;
-	}
-
 	public Integer getId() {
 		return id;
 	}

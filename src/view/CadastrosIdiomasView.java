@@ -43,8 +43,10 @@ public class CadastrosIdiomasView implements Serializable {
 	public void consultar() throws ExecutionException {
 
 		idiomas.clear();
-		String consulta = "select new modelo.Idioma(a.id, a.idioma) from modelo.Idioma a where a.idioma like '%"
-				+ getIdiomaFiltro() + "%' order by a.idioma";
+		
+		String consulta = "from Idioma a " +
+						  "where a.idioma like '%" + getIdiomaFiltro().toUpperCase() + "%' " +
+						  "order by a.idioma";
 
 		idiomas = operacao.queryList(consulta);
 		

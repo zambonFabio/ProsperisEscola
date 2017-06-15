@@ -43,8 +43,10 @@ public class CadastrosEdicoesView implements Serializable {
 	public void consultar() throws ExecutionException {
 
 		edicoes.clear();
-		String consulta = "select new modelo.Edicao(a.id, a.edicao) from modelo.Edicao a where a.edicao like '%"
-				+ getEdicaoFiltro() + "%' order by a.edicao";
+		
+		String consulta = "from Edicao a " +
+						  "where upper(a.edicao) like '%" + getEdicaoFiltro().toUpperCase() + "%' " +
+						  "order by a.edicao";
 
 		edicoes = operacao.queryList(consulta);
 		

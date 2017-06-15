@@ -53,13 +53,17 @@ public class CadastrosLivrosView implements Serializable {
 
 		livros.clear();
 
-		String consulta = "select new modelo.Livro(a.id, a.titulo, " + 
-		                                          "a.codigoDeBarras, " + 
-				                                  "a.isbn, " + 
-		                                          "a.numeroDePaginas, " + 
-				                                  "a.informacoes, " + 
-		                                          "a.ativo) "
-				+ "from modelo.Livro a where a.titulo like '%" + getTituloFiltro() + "%' order by a.titulo";
+		String consulta = "from Livro a " +
+						  "where upper(a.titulo) like '%" + getTituloFiltro().toUpperCase() + "%' " +
+						  "order by a.titulo";
+		
+//		String consulta = "select new modelo.Livro(a.id, a.titulo, " + 
+//		                                          "a.codigoDeBarras, " + 
+//				                                  "a.isbn, " + 
+//		                                          "a.numeroDePaginas, " + 
+//				                                  "a.informacoes, " + 
+//		                                          "a.ativo) "
+//				+ "from modelo.Livro a where a.titulo like '%" + getTituloFiltro() + "%' order by a.titulo";
 
 		livros = operacao.queryList(consulta);
 
@@ -76,8 +80,12 @@ public class CadastrosLivrosView implements Serializable {
 		
 		if (query != null) {
 
-			String consulta = "select new modelo.Editora(a.id, a.nomeFantasia) from modelo.Editora a where a.nomeFantasia like '%"
-					+ query + "%' order by a.nomeFantasia";
+			String consulta = "from Editora a " +
+							  "where upper(a.nomeFantasia) like '%" + query.toUpperCase() + "%' " +
+							  "order by a.nomeFantasia";
+			
+//			String consulta = "select new modelo.Editora(a.id, a.nomeFantasia) from modelo.Editora a where a.nomeFantasia like '%"
+//					+ query + "%' order by a.nomeFantasia";
 
 			ImplementacaoOperacoes<Editora> operacao = new ImplementacaoOperacoes<Editora>();
 			editoras = operacao.queryList(consulta);

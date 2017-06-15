@@ -11,13 +11,4 @@ public class TipoDeCapaDeLivro extends TipoDeCapa {
 
 	private static final long serialVersionUID = 1L;
 
-	public TipoDeCapaDeLivro() {
-
-	}
-
-	public TipoDeCapaDeLivro(Integer id, String tipoDeCapa) {
-		setId(id);
-		setTipoDeCapa(tipoDeCapa);
-	}
-
 }

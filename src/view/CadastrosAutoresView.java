@@ -43,8 +43,10 @@ public class CadastrosAutoresView implements Serializable {
 	public void consultar() throws ExecutionException {
 
 		autores.clear();
-		String consulta = "select new modelo.Autor(a.id, a.nome) from modelo.Autor a where a.nome like '%"
-				+ getNomeFiltro() + "%' order by a.nome";
+		
+		String consulta = "from Autor a " +
+						  "where upper(a.nome) like '%" + getNomeFiltro().toUpperCase() + "%' " +
+						  "order by a.nome";
 
 		autores = operacao.queryList(consulta);
 		

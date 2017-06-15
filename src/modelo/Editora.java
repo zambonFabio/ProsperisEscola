@@ -16,15 +16,6 @@ public class Editora extends PessoaJuridica {
 	@OneToMany(mappedBy="editora", fetch = FetchType.LAZY) 
 	@Cascade(CascadeType.ALL) 
 	private Collection<Livro> livros; 
-	
-	public Editora() {
-
-	}
-
-	public Editora(Integer id, String nomeFantasia) {
-		setId(id);
-		setNomeFantasia(nomeFantasia);
-	}
 
 	public Collection<Livro> getLivros() {
 		return livros;
@@ -33,7 +24,5 @@ public class Editora extends PessoaJuridica {
 	public void setLivros(Collection<Livro> livros) {
 		this.livros = livros;
 	}	
-	
-	
 	
 }

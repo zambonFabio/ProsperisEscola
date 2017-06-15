@@ -50,28 +50,6 @@ public class Livro implements Serializable {
 	@Cascade(CascadeType.SAVE_UPDATE)
 	private Editora editora;
 
-	public Livro() {
-
-	}
-
-	public Livro(Integer id, 
-			     String titulo, 
-			     Long codigoDeBarras, 
-			     Long isbn, 
-			     Integer numeroDePaginas,
-			     String informacoes, 
-			     Boolean ativo) {
-		
-		this.id = id;
-		this.titulo = titulo;
-		this.codigoDeBarras = codigoDeBarras;
-		this.isbn = isbn;
-		this.numeroDePaginas = numeroDePaginas;
-		this.informacoes = informacoes;
-		this.ativo = ativo;
-		
-	}
-
 	public Integer getId() {
 		return id;
 	}

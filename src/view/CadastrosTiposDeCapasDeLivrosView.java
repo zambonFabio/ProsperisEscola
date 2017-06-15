@@ -44,10 +44,10 @@ public class CadastrosTiposDeCapasDeLivrosView implements Serializable {
 	public void consultar() throws ExecutionException {
 
 		tiposDeCapas.clear();
-		String consulta = "select new modelo.TipoDeCapaDeLivro(a.id, a.tipoDeCapa) "
-				+ "from modelo.TipoDeCapaDeLivro a " 
-				+ "where a.tipoDeCapa like '%" + getTipoDeCapaFiltro()
-				+ "%' order by a.tipoDeCapa";
+		
+		String consulta = "from TipoDeCapaDeLivro a " +
+						  "where a.tipoDeCapa like '%" + getTipoDeCapaFiltro().toUpperCase() + "%' " +
+						  "order by a.tipoDeCapa";
 
 		tiposDeCapas = operacao.queryList(consulta);
 

@@ -25,15 +25,6 @@ public class Assunto implements Serializable{
 	@Column(name = "assunto", unique = true, nullable = false, insertable = true, updatable = true, length = 100)
 	private String assunto;
 
-	public Assunto() {
-
-	}
-
-	public Assunto(Integer id, String assunto) {
-		this.id = id;
-		this.assunto = assunto;
-	}
-
 	public Integer getId() {
 		return id;
 	}

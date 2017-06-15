@@ -43,8 +43,10 @@ public class CadastrosAssuntosView implements Serializable {
 	public void consultar() throws ExecutionException {
 
 		assuntos.clear();
-		String consulta = "select new modelo.Assunto(a.id, a.assunto) from modelo.Assunto a where a.assunto like '%"
-				+ getAssuntoFiltro() + "%' order by a.assunto";
+		
+		String consulta = "from Assunto a " +
+		                  "where upper(a.assunto) like '%" + getAssuntoFiltro().toUpperCase() + "%' " +
+				          "order by a.assunto";
 
 		assuntos = operacao.queryList(consulta);
 		
