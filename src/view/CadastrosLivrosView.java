@@ -56,14 +56,6 @@ public class CadastrosLivrosView implements Serializable {
 		String consulta = "from Livro a " +
 						  "where upper(a.titulo) like '%" + getTituloFiltro().toUpperCase() + "%' " +
 						  "order by a.titulo";
-		
-//		String consulta = "select new modelo.Livro(a.id, a.titulo, " + 
-//		                                          "a.codigoDeBarras, " + 
-//				                                  "a.isbn, " + 
-//		                                          "a.numeroDePaginas, " + 
-//				                                  "a.informacoes, " + 
-//		                                          "a.ativo) "
-//				+ "from modelo.Livro a where a.titulo like '%" + getTituloFiltro() + "%' order by a.titulo";
 
 		livros = operacao.queryList(consulta);
 
@@ -83,9 +75,6 @@ public class CadastrosLivrosView implements Serializable {
 			String consulta = "from Editora a " +
 							  "where upper(a.nomeFantasia) like '%" + query.toUpperCase() + "%' " +
 							  "order by a.nomeFantasia";
-			
-//			String consulta = "select new modelo.Editora(a.id, a.nomeFantasia) from modelo.Editora a where a.nomeFantasia like '%"
-//					+ query + "%' order by a.nomeFantasia";
 
 			ImplementacaoOperacoes<Editora> operacao = new ImplementacaoOperacoes<Editora>();
 			editoras = operacao.queryList(consulta);
@@ -107,7 +96,7 @@ public class CadastrosLivrosView implements Serializable {
 		this.editora = null;
 	}
 
-	public void salvar() throws ExecutionException {
+	public void salvar(Boolean continuar) throws ExecutionException {
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		Boolean salvo = null;
@@ -120,31 +109,48 @@ public class CadastrosLivrosView implements Serializable {
 
 		} else {
 
-			Livro livro = new Livro();
+			try {
 
-			livro.setId(this.getId());
-			livro.setTitulo(this.getTitulo());
-			livro.setCodigoDeBarras(this.getCodigoDeBarras());
-			livro.setIsbn(this.getIsbn());
-			livro.setNumeroDePaginas(this.getNumeroDePaginas());
-			livro.setInformacoes(this.getInformacoes());
-			livro.setAtivo(this.getAtivo());
-			livro.setEditora(this.getEditora());
+				Livro livro = new Livro();
 
-			operacao.saveOrUpdate(livro);
+				livro.setId(this.getId());
+				livro.setTitulo(this.getTitulo());
+				livro.setCodigoDeBarras(this.getCodigoDeBarras());
+				livro.setIsbn(this.getIsbn());
+				livro.setNumeroDePaginas(this.getNumeroDePaginas());
+				livro.setInformacoes(this.getInformacoes());
+				livro.setAtivo(this.getAtivo());
+				livro.setEditora(this.getEditora());
 
-			salvo = true;
-			msg = this.getTitulo() + " salvo com sucesso.";
-			Utilitario.message("info", "Info", msg);
+				operacao.saveOrUpdate(livro);
 
-			this.setId(null);
-			this.setTituloFiltro("");
+				salvo = true;
+				msg = this.getTitulo() + " salvo com sucesso.";
+				Utilitario.message("info", "Info", msg);
 
-			consultar();
+				this.id = null;
+				this.setTitulo(null);
+				this.setCodigoDeBarras(null);
+				this.setIsbn(null);
+				this.setNumeroDePaginas(null);
+				this.setInformacoes(null);
+				this.setAtivo(true);
+				this.setEditora(null);
+
+				consultar();
+
+			} catch (Exception e) {
+
+				msg = "Erro ao salvar " + this.getTitulo();
+				msg = msg + "\n" + e;
+				Utilitario.message("error", "Erro", msg);
+
+			}
 
 		}
 
 		context.addCallbackParam("salvo", salvo);
+		context.addCallbackParam("continuar", continuar);
 
 	}
 

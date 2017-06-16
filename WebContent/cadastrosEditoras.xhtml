@@ -39,7 +39,7 @@
 
 
 					<p:inputText id="iptNomeFantasia"
-						value="#{cadastrosEditorasView.nomeFantasiaFiltro}" styleClass="iptPesquisar"
+						value="#{cadastrosEditorasView.nomeFantasiaFiltro}" styleClass="iptEditora"
 						title="Pesquisar editoras pelo nome fantasia." /> &nbsp;
 					<p:watermark for="iptNomeFantasia" value="Nome fantasia da editora" />
 
@@ -103,7 +103,7 @@
 							<p:column>Nome fantasia:
 						</p:column>
 							<p:column>
-								<p:inputText styleClass="iptNome"
+								<p:inputText styleClass="iptEditora"
 									value="#{cadastrosEditorasView.nomeFantasia}" />
 							</p:column>
 
@@ -116,9 +116,15 @@
 
 						<f:facet name="right">
 
+							<p:commandButton title="Salvar e continuar" value="Salvar e continuar"
+								icon="ui-icon-disk"
+								actionListener="#{cadastrosEditorasView.salvar(true)}"
+								update="growl otptPnlLista otptPnlEditora"
+								oncomplete="handleSalvarRequest(xhr, status, args)" />
+
 							<p:commandButton title="Salvar" value="Salvar"
 								icon="ui-icon-disk"
-								actionListener="#{cadastrosEditorasView.salvar}"
+								actionListener="#{cadastrosEditorasView.salvar(false)}"
 								update="growl otptPnlLista"
 								oncomplete="handleSalvarRequest(xhr, status, args)" />
 
@@ -151,15 +157,19 @@
 		</h:form>
 
 		<script type="text/javascript">
+		
 			function handleSalvarRequest(xhr, status, args) {
 				if (args.validationFailed || !args.salvo) {
 					PF('dlgEditora').jq.effect("shake", {
 						times : 5
 					}, 100);
+				} else if (args.continuar) {
+					PF('dlgEditora').jq.effect("bounce", "slow");
 				} else {
 					PF('dlgEditora').hide();
-				}
+				}	
 			}
+			
 		</script>
 
 	</ui:define>

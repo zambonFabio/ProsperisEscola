@@ -38,7 +38,7 @@
 					</span>
 
 					<p:inputText id="iptEdicao"
-						value="#{cadastrosEdicoesView.edicaoFiltro}" styleClass="iptPesquisar"
+						value="#{cadastrosEdicoesView.edicaoFiltro}" styleClass="iptEdicao"
 						title="Pesquisar por edição." /> &nbsp;
 					<p:watermark for="iptEdicao" value="Edição" />
 
@@ -102,7 +102,7 @@
 							<p:column>Edição:
 						</p:column>
 							<p:column>
-								<p:inputText styleClass="iptNome"
+								<p:inputText styleClass="iptEdicao"
 									value="#{cadastrosEdicoesView.edicao}" />
 							</p:column>
 
@@ -115,9 +115,15 @@
 
 						<f:facet name="right">
 
+							<p:commandButton title="Salvar e continuar" value="Salvar e continuar"
+								icon="ui-icon-disk"
+								actionListener="#{cadastrosEdicoesView.salvar(true)}"
+								update="growl otptPnlLista otptPnlEdicao"
+								oncomplete="handleSalvarRequest(xhr, status, args)" />
+
 							<p:commandButton title="Salvar" value="Salvar"
 								icon="ui-icon-disk"
-								actionListener="#{cadastrosEdicoesView.salvar}"
+								actionListener="#{cadastrosEdicoesView.salvar(false)}"
 								update="growl otptPnlLista"
 								oncomplete="handleSalvarRequest(xhr, status, args)" />
 
@@ -150,15 +156,19 @@
 		</h:form>
 
 		<script type="text/javascript">
+		
 			function handleSalvarRequest(xhr, status, args) {
 				if (args.validationFailed || !args.salvo) {
 					PF('dlgEdicao').jq.effect("shake", {
 						times : 5
 					}, 100);
+				} else if (args.continuar) {
+					PF('dlgEdicao').jq.effect("bounce", "slow");
 				} else {
 					PF('dlgEdicao').hide();
-				}
+				}	
 			}
+			
 		</script>
 
 	</ui:define>

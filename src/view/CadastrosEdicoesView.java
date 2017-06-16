@@ -62,7 +62,7 @@ public class CadastrosEdicoesView implements Serializable {
 		this.setEdicao(null);
 	}
 
-	public void salvar() throws ExecutionException {
+	public void salvar(Boolean continuar) throws ExecutionException {
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		Boolean salvo = null;
@@ -75,25 +75,36 @@ public class CadastrosEdicoesView implements Serializable {
 
 		} else {
 
-			Edicao edicao = new Edicao();
+			try {
 
-			edicao.setId(this.getId());
-			edicao.setEdicao(this.getEdicao());
+				Edicao edicao = new Edicao();
 
-			operacao.saveOrUpdate(edicao);
+				edicao.setId(this.getId());
+				edicao.setEdicao(this.getEdicao());
 
-			salvo = true;
-			msg = this.getEdicao() + " salvo com sucesso.";
-			Utilitario.message("info", "Info", msg);
+				operacao.saveOrUpdate(edicao);
 
-			this.setId(null);
-			this.setEdicao("");
+				salvo = true;
+				msg = this.getEdicao() + " salvo com sucesso.";
+				Utilitario.message("info", "Info", msg);
 
-			consultar();
+				this.setId(null);
+				this.setEdicao("");
+
+				consultar();
+
+			} catch (Exception e) {
+
+				msg = "Erro ao salvar " + this.getEdicao();
+				msg = msg + "\n" + e;
+				Utilitario.message("error", "Erro", msg);
+
+			}
 
 		}
 
 		context.addCallbackParam("salvo", salvo);
+		context.addCallbackParam("continuar", continuar);
 
 	}
 

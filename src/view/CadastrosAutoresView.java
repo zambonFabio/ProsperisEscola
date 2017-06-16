@@ -62,7 +62,7 @@ public class CadastrosAutoresView implements Serializable {
 		this.setNome(null);
 	}
 
-	public void salvar() throws ExecutionException {
+	public void salvar(Boolean continuar) throws ExecutionException {
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		Boolean salvo = null;
@@ -75,25 +75,37 @@ public class CadastrosAutoresView implements Serializable {
 
 		} else {
 
-			Autor autor = new Autor();
+			
+			try {
 
-			autor.setId(this.getId());
-			autor.setNome(this.getNome());
+				Autor autor = new Autor();
 
-			operacao.saveOrUpdate(autor);
+				autor.setId(this.getId());
+				autor.setNome(this.getNome());
 
-			salvo = true;
-			msg = this.getNome() + " salvo com sucesso.";
-			Utilitario.message("info", "Info", msg);
+				operacao.saveOrUpdate(autor);
 
-			this.setId(null);
-			this.setNome("");
+				salvo = true;
+				msg = this.getNome() + " salvo com sucesso.";
+				Utilitario.message("info", "Info", msg);
 
-			consultar();
+				this.id = null;
+				this.setNome(null);
+
+				consultar();
+
+			} catch (Exception e) {
+
+				msg = "Erro ao salvar " + this.getNome();
+				msg = msg + "\n" + e;
+				Utilitario.message("error", "Erro", msg);
+
+			}
 
 		}
 
 		context.addCallbackParam("salvo", salvo);
+		context.addCallbackParam("continuar", continuar);
 
 	}
 

@@ -62,7 +62,7 @@ public class CadastrosEditorasView implements Serializable {
 		this.setNomeFantasia(null);
 	}
 
-	public void salvar() throws ExecutionException {
+	public void salvar(Boolean continuar) throws ExecutionException {
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		Boolean salvo = null;
@@ -75,25 +75,36 @@ public class CadastrosEditorasView implements Serializable {
 
 		} else {
 
-			Editora editora = new Editora();
+			try {
 
-			editora.setId(this.getId());
-			editora.setNomeFantasia(this.getNomeFantasia());
+				Editora editora = new Editora();
 
-			operacao.saveOrUpdate(editora);
+				editora.setId(this.getId());
+				editora.setNomeFantasia(this.getNomeFantasia());
 
-			salvo = true;
-			msg = this.getNomeFantasia() + " salvo com sucesso.";
-			Utilitario.message("info", "Info", msg);
+				operacao.saveOrUpdate(editora);
 
-			this.setId(null);
-			this.setNomeFantasia("");
+				salvo = true;
+				msg = this.getNomeFantasia() + " salvo com sucesso.";
+				Utilitario.message("info", "Info", msg);
 
-			consultar();
+				this.id = null;
+				this.setNomeFantasia(null);
+
+				consultar();
+
+			} catch (Exception e) {
+
+				msg = "Erro ao excluir " + this.getNomeFantasia();
+				msg = msg + "\n" + e;
+				Utilitario.message("error", "Erro", msg);
+
+			}
 
 		}
 
 		context.addCallbackParam("salvo", salvo);
+		context.addCallbackParam("continuar", continuar);
 
 	}
 

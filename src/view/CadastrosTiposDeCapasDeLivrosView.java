@@ -46,7 +46,7 @@ public class CadastrosTiposDeCapasDeLivrosView implements Serializable {
 		tiposDeCapas.clear();
 		
 		String consulta = "from TipoDeCapaDeLivro a " +
-						  "where a.tipoDeCapa like '%" + getTipoDeCapaFiltro().toUpperCase() + "%' " +
+						  "where upper(a.tipoDeCapa) like '%" + getTipoDeCapaFiltro().toUpperCase() + "%' " +
 						  "order by a.tipoDeCapa";
 
 		tiposDeCapas = operacao.queryList(consulta);
@@ -63,7 +63,7 @@ public class CadastrosTiposDeCapasDeLivrosView implements Serializable {
 		this.setTipoDeCapa(null);
 	}
 
-	public void salvar() throws ExecutionException {
+	public void salvar(Boolean continuar) throws ExecutionException {
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		Boolean salvo = null;
@@ -76,25 +76,36 @@ public class CadastrosTiposDeCapasDeLivrosView implements Serializable {
 
 		} else {
 
-			TipoDeCapaDeLivro tipoDeCapa = new TipoDeCapaDeLivro();
+			try {
 
-			tipoDeCapa.setId(this.getId());
-			tipoDeCapa.setTipoDeCapa(this.getTipoDeCapa());
+				TipoDeCapaDeLivro tipoDeCapa = new TipoDeCapaDeLivro();
 
-			operacao.saveOrUpdate(tipoDeCapa);
+				tipoDeCapa.setId(this.getId());
+				tipoDeCapa.setTipoDeCapa(this.getTipoDeCapa());
 
-			salvo = true;
-			msg = this.getTipoDeCapa() + " salvo com sucesso.";
-			Utilitario.message("info", "Info", msg);
+				operacao.saveOrUpdate(tipoDeCapa);
 
-			this.setId(null);
-			this.setTipoDeCapa("");
+				salvo = true;
+				msg = this.getTipoDeCapa() + " salvo com sucesso.";
+				Utilitario.message("info", "Info", msg);
 
-			consultar();
+				this.id = null;
+				this.setTipoDeCapa(null);
+
+				consultar();
+
+			} catch (Exception e) {
+
+				msg = "Erro ao salvar " + this.getTipoDeCapa();
+				msg = msg + "\n" + e;
+				Utilitario.message("error", "Erro", msg);
+
+			}
 
 		}
 
 		context.addCallbackParam("salvo", salvo);
+		context.addCallbackParam("continuar", continuar);
 
 	}
 

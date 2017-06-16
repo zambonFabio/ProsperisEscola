@@ -26,11 +26,10 @@
 					<p:commandButton value="Incluir novo ano"
 						title="Incluir um novo ano." icon="ui-icon-document"
 						onclick="PF('dlgAno').show()"
-						actionListener="#{cadastrosAnosView.novo}"
-						update="otptPnlAno" />
+						actionListener="#{cadastrosAnosView.novo}" update="otptPnlAno" />
 
 				</f:facet>
-				
+
 				<f:facet name="right">
 
 					<span class="ui-separator"> <span
@@ -84,8 +83,7 @@
 
 			</p:outputPanel>
 
-			<p:dialog id="dlgAno" widgetVar="dlgAno" modal="true"
-				header="Ano">
+			<p:dialog id="dlgAno" widgetVar="dlgAno" modal="true" header="Ano">
 
 				<p:outputPanel id="otptPnlAno">
 
@@ -97,7 +95,7 @@
 							<p:column>Ano:
 						</p:column>
 							<p:column>
-								<p:inputText styleClass="iptAno"
+								<p:inputText styleClass="iptAno" id="ano"
 									value="#{cadastrosAnosView.ano}" />
 							</p:column>
 
@@ -110,9 +108,15 @@
 
 						<f:facet name="right">
 
+							<p:commandButton title="Salvar e continuar"
+								value="Salvar e continuar" icon="ui-icon-disk"
+								actionListener="#{cadastrosAnosView.salvar(true)}"
+								update="growl otptPnlLista otptPnlAno"
+								oncomplete="handleSalvarRequest(xhr, status, args)"/>
+
 							<p:commandButton title="Salvar" value="Salvar"
 								icon="ui-icon-disk"
-								actionListener="#{cadastrosAnosView.salvar}"
+								actionListener="#{cadastrosAnosView.salvar(false)}"
 								update="growl otptPnlLista"
 								oncomplete="handleSalvarRequest(xhr, status, args)" />
 
@@ -145,15 +149,19 @@
 		</h:form>
 
 		<script type="text/javascript">
+		
 			function handleSalvarRequest(xhr, status, args) {
 				if (args.validationFailed || !args.salvo) {
 					PF('dlgAno').jq.effect("shake", {
 						times : 5
 					}, 100);
+				} else if (args.continuar) {
+					PF('dlgAno').jq.effect("bounce", "slow");
 				} else {
 					PF('dlgAno').hide();
-				}
+				}	
 			}
+			
 		</script>
 
 	</ui:define>

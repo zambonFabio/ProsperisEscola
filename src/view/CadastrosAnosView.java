@@ -54,7 +54,7 @@ public class CadastrosAnosView implements Serializable{
 		this.ano = null;
 	}
 
-	public void salvar() throws ExecutionException {
+	public void salvar(Boolean continuar) throws ExecutionException {
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		Boolean salvo = null;
@@ -67,24 +67,36 @@ public class CadastrosAnosView implements Serializable{
 
 		} else {
 
-			Ano ano = new Ano();
+			try {
+			
+				Ano ano = new Ano();
 
-			ano.setId(this.getId());
-			ano.setAno(this.getAno());
+				ano.setId(this.getId());
+				ano.setAno(this.getAno());
 
-			operacao.saveOrUpdate(ano);
+				operacao.saveOrUpdate(ano);
 
-			salvo = true;
-			msg = this.getAno().toString() + " salvo com sucesso.";
-			Utilitario.message("info", "Info", msg);
+				salvo = true;
+				msg = this.getAno().toString() + " salvo com sucesso.";
+				Utilitario.message("info", "Info", msg);
 
-			this.setAno(null);
+				this.id = null;
+				this.setAno(null);
 
-			consultar();
+				consultar();
+			
+			} catch (Exception e) {
+
+				msg = "Erro ao salvar " + this.getAno().toString();
+				msg = msg + "\n" + e;
+				Utilitario.message("error", "Erro", msg);
+
+			}
 
 		}
 
 		context.addCallbackParam("salvo", salvo);
+		context.addCallbackParam("continuar", continuar);
 
 	}
 

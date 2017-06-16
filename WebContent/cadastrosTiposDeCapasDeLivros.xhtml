@@ -39,7 +39,7 @@
 
 
 					<p:inputText id="iptTipoDeCapa"
-						value="#{cadastrosTiposDeCapasDeLivrosView.tipoDeCapaFiltro}" styleClass="iptPesquisar"
+						value="#{cadastrosTiposDeCapasDeLivrosView.tipoDeCapaFiltro}" styleClass="iptTipoDeCapa"
 						title="Pesquisar tipo de capa de livro." /> &nbsp;
 					<p:watermark for="iptTipoDeCapa" value="Tipo de capa de livro" />
 
@@ -103,7 +103,7 @@
 							<p:column>Tipo de capa:
 						</p:column>
 							<p:column>
-								<p:inputText styleClass="iptNome"
+								<p:inputText styleClass="iptTipoDeCapa"
 									value="#{cadastrosTiposDeCapasDeLivrosView.tipoDeCapa}" />
 							</p:column>
 
@@ -115,10 +115,16 @@
 						style="padding-top:4px;padding-right: 8px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
 
 						<f:facet name="right">
+						
+							<p:commandButton title="Salvar e continuar" value="Salvar e continuar"
+								icon="ui-icon-disk"
+								actionListener="#{cadastrosTiposDeCapasDeLivrosView.salvar(true)}"
+								update="growl otptPnlLista otptPnlTipoDeCapa"
+								oncomplete="handleSalvarRequest(xhr, status, args)" />
 
 							<p:commandButton title="Salvar" value="Salvar"
 								icon="ui-icon-disk"
-								actionListener="#{cadastrosTiposDeCapasDeLivrosView.salvar}"
+								actionListener="#{cadastrosTiposDeCapasDeLivrosView.salvar(false)}"
 								update="growl otptPnlLista"
 								oncomplete="handleSalvarRequest(xhr, status, args)" />
 
@@ -151,15 +157,19 @@
 		</h:form>
 
 		<script type="text/javascript">
+		
 			function handleSalvarRequest(xhr, status, args) {
 				if (args.validationFailed || !args.salvo) {
 					PF('dlgTipoDeCapa').jq.effect("shake", {
 						times : 5
 					}, 100);
+				} else if (args.continuar) {
+					PF('dlgTipoDeCapa').jq.effect("bounce", "slow");
 				} else {
 					PF('dlgTipoDeCapa').hide();
-				}
+				}	
 			}
+			
 		</script>
 
 	</ui:define>

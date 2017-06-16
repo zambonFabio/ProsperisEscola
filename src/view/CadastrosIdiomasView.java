@@ -45,7 +45,7 @@ public class CadastrosIdiomasView implements Serializable {
 		idiomas.clear();
 		
 		String consulta = "from Idioma a " +
-						  "where a.idioma like '%" + getIdiomaFiltro().toUpperCase() + "%' " +
+						  "where upper(a.idioma) like '%" + getIdiomaFiltro().toUpperCase() + "%' " +
 						  "order by a.idioma";
 
 		idiomas = operacao.queryList(consulta);
@@ -62,7 +62,7 @@ public class CadastrosIdiomasView implements Serializable {
 		this.setIdioma(null);
 	}
 
-	public void salvar() throws ExecutionException {
+	public void salvar(Boolean continuar) throws ExecutionException {
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		Boolean salvo = null;
@@ -75,25 +75,36 @@ public class CadastrosIdiomasView implements Serializable {
 
 		} else {
 
-			Idioma idioma = new Idioma();
+			try {
 
-			idioma.setId(this.getId());
-			idioma.setIdioma(this.getIdioma());
+				Idioma idioma = new Idioma();
 
-			operacao.saveOrUpdate(idioma);
+				idioma.setId(this.getId());
+				idioma.setIdioma(this.getIdioma());
 
-			salvo = true;
-			msg = this.getIdioma() + " salvo com sucesso.";
-			Utilitario.message("info", "Info", msg);
+				operacao.saveOrUpdate(idioma);
 
-			this.setId(null);
-			this.setIdioma("");
+				salvo = true;
+				msg = this.getIdioma() + " salvo com sucesso.";
+				Utilitario.message("info", "Info", msg);
 
-			consultar();
+				this.id = null;
+				this.setIdioma(null);
+
+				consultar();
+
+			} catch (Exception e) {
+
+				msg = "Erro ao salvar " + this.getIdioma();
+				msg = msg + "\n" + e;
+				Utilitario.message("error", "Erro", msg);
+
+			}
 
 		}
 
 		context.addCallbackParam("salvo", salvo);
+		context.addCallbackParam("continuar", continuar);
 
 	}
 

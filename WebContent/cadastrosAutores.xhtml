@@ -39,7 +39,7 @@
 
 
 					<p:inputText id="iptNome"
-						value="#{cadastrosAutoresView.nomeFiltro}" styleClass="iptPesquisar"
+						value="#{cadastrosAutoresView.nomeFiltro}" styleClass="iptAutor"
 						title="Pesquisar autores pelo nome." /> &nbsp;
 					<p:watermark for="iptNome" value="Nome do autor" />
 
@@ -103,7 +103,7 @@
 							<p:column>Nome:
 						</p:column>
 							<p:column>
-								<p:inputText styleClass="iptNome"
+								<p:inputText styleClass="iptAutor"
 									value="#{cadastrosAutoresView.nome}" />
 							</p:column>
 
@@ -116,9 +116,15 @@
 
 						<f:facet name="right">
 
+							<p:commandButton title="Salvar e continuar" value="Salvar e continuar"
+								icon="ui-icon-disk"
+								actionListener="#{cadastrosAutoresView.salvar(true)}"
+								update="growl otptPnlLista otptPnlAutor"
+								oncomplete="handleSalvarRequest(xhr, status, args)" />
+
 							<p:commandButton title="Salvar" value="Salvar"
 								icon="ui-icon-disk"
-								actionListener="#{cadastrosAutoresView.salvar}"
+								actionListener="#{cadastrosAutoresView.salvar(false)}"
 								update="growl otptPnlLista"
 								oncomplete="handleSalvarRequest(xhr, status, args)" />
 
@@ -151,15 +157,19 @@
 		</h:form>
 
 		<script type="text/javascript">
+		
 			function handleSalvarRequest(xhr, status, args) {
 				if (args.validationFailed || !args.salvo) {
 					PF('dlgAutor').jq.effect("shake", {
 						times : 5
 					}, 100);
+				} else if (args.continuar) {
+					PF('dlgAutor').jq.effect("bounce", "slow");
 				} else {
 					PF('dlgAutor').hide();
-				}
+				}	
 			}
+			
 		</script>
 
 	</ui:define>

@@ -37,10 +37,9 @@
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
-
 					<p:inputText id="iptIdioma"
 						value="#{cadastrosIdiomasView.idiomaFiltro}"
-						styleClass="iptPesquisar" title="Pesquisar por idioma." /> &nbsp;
+						styleClass="iptIdioma" title="Pesquisar por idioma." /> &nbsp;
 					<p:watermark for="iptIdioma" value="Idioma" />
 
 					<p:commandButton value="Pesquisar"
@@ -102,7 +101,7 @@
 							<p:column>Idioma:
 						</p:column>
 							<p:column>
-								<p:inputText styleClass="iptNome"
+								<p:inputText styleClass="iptIdioma"
 									value="#{cadastrosIdiomasView.idioma}" />
 							</p:column>
 
@@ -115,9 +114,15 @@
 
 						<f:facet name="right">
 
+							<p:commandButton title="Salvar e continuar" value="Salvar e continuar"
+								icon="ui-icon-disk"
+								actionListener="#{cadastrosIdiomasView.salvar(true)}"
+								update="growl otptPnlLista otptPnlIdioma"
+								oncomplete="handleSalvarRequest(xhr, status, args)" />
+
 							<p:commandButton title="Salvar" value="Salvar"
 								icon="ui-icon-disk"
-								actionListener="#{cadastrosIdiomasView.salvar}"
+								actionListener="#{cadastrosIdiomasView.salvar(false)}"
 								update="growl otptPnlLista"
 								oncomplete="handleSalvarRequest(xhr, status, args)" />
 
@@ -150,15 +155,19 @@
 		</h:form>
 
 		<script type="text/javascript">
+		
 			function handleSalvarRequest(xhr, status, args) {
 				if (args.validationFailed || !args.salvo) {
 					PF('dlgIdioma').jq.effect("shake", {
 						times : 5
 					}, 100);
+				} else if (args.continuar) {
+					PF('dlgIdioma').jq.effect("bounce", "slow");
 				} else {
 					PF('dlgIdioma').hide();
-				}
+				}	
 			}
+			
 		</script>
 
 	</ui:define>
