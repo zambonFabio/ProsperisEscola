@@ -38,8 +38,8 @@
 
 
 					<p:inputText id="iptTitulo"
-						value="#{cadastrosLivrosView.tituloFiltro}"
-						styleClass="iptTitulo" title="Pesquisar por titulo." /> &nbsp;
+						value="#{cadastrosLivrosView.tituloFiltro}" styleClass="iptTitulo"
+						title="Pesquisar por titulo." /> &nbsp;
 						
 					<p:watermark for="iptTitulo" value="Titulo" />
 
@@ -94,93 +94,159 @@
 
 				<p:outputPanel id="otptPnlLivro">
 
-					<p:panelGrid styleClass="ui-noborder"
-						style="ui-panelgrid-blank;margin-top:0px">
+					<p:tabView>
 
-						<p:row>
+						<p:tab title="Campos">
 
-							<p:column>Ativo:</p:column>
-							<p:column>
-								<p:inputSwitch value="#{cadastrosLivrosView.ativo}"
-									style="width:100px" />
-							</p:column>
+							<p:panelGrid styleClass="ui-noborder"
+								style="ui-panelgrid-blank;margin-top:0px">
 
-						</p:row>
+								<p:row>
+									<p:column>Titulo:</p:column>
+									<p:column colspan="3">
+										<p:inputText style="width:455px"
+											value="#{cadastrosLivrosView.titulo}" />
+									</p:column>
 
-						<p:row>
+									<p:column>Ativo:</p:column>
+									<p:column>
+										<p:selectBooleanButton value="#{cadastrosLivrosView.ativo}"
+											onLabel="Sim" offLabel="Não" />
+									</p:column>
+								</p:row>
 
-							<p:column>Código de barras:</p:column>
-							<p:column>
-								<p:inputText styleClass="iptImputLivro"
-									value="#{cadastrosLivrosView.codigoDeBarras}" />
-							</p:column>
+								<p:row>
+									<p:column>Código de barras:</p:column>
+									<p:column>
+										<p:inputText value="#{cadastrosLivrosView.codigoDeBarras}"
+											style="width:160px" />
+									</p:column>
 
-						</p:row>
+									<p:column>ISBN:</p:column>
+									<p:column>
+										<p:inputText value="#{cadastrosLivrosView.isbn}"
+											style="width:160px" />
+									</p:column>
 
+									<p:column>Páginas:</p:column>
+									<p:column>
+										<p:inputText value="#{cadastrosLivrosView.numeroDePaginas}"
+											style="width:60px" />
+									</p:column>
+								</p:row>
 
-						<p:row>
+								<p:row>
 
-							<p:column>Titulo:</p:column>
-							<p:column>
-								<p:inputText styleClass="iptTitulo"
-									value="#{cadastrosLivrosView.titulo}" />
-							</p:column>
+									<p:column>Editora:</p:column>
+									<p:column colspan="3">
+										<p:autoComplete id="iptEditora"
+											value="#{cadastrosLivrosView.editora}"
+											completeMethod="#{cadastrosLivrosView.completeEditora}"
+											var="editora" itemLabel="#{editora.nomeFantasia}"
+											itemValue="#{editora}" converter="editoraConverter"
+											forceSelection="true" style="width: 100%"
+											inputStyle="width: 455px">
+										</p:autoComplete>
+									</p:column>
 
-						</p:row>
+									<p:column>Ano:</p:column>
+									<p:column>
+										<p:autoComplete id="iptAno" value="#{cadastrosLivrosView.ano}"
+											completeMethod="#{cadastrosLivrosView.completeAno}" var="ano"
+											itemLabel="#{ano.ano}" itemValue="#{ano}"
+											converter="anoConverter" forceSelection="true"
+											inputStyle="width: 60px" />
+									</p:column>
 
-						<p:row>
+								</p:row>
 
-							<p:column>ISBN:</p:column>
-							<p:column>
-								<p:inputText styleClass="iptImputLivro"
-									value="#{cadastrosLivrosView.isbn}" />
-							</p:column>
+								<p:row>
 
-						</p:row>
+									<p:column>Idioma:</p:column>
+									<p:column>
+										<p:autoComplete id="iptIdioma"
+											value="#{cadastrosLivrosView.idioma}"
+											completeMethod="#{cadastrosLivrosView.completeIdioma}"
+											var="idioma" itemLabel="#{idioma.idioma}"
+											itemValue="#{idioma}" converter="idiomaConverter"
+											forceSelection="true" inputStyle="width: 160px" />
+									</p:column>
 
-						<p:row>
+									<p:column>Tipo de capa:</p:column>
+									<p:column>
+										<p:autoComplete id="iptTipoDeCapaDeLivro"
+											value="#{cadastrosLivrosView.tipoDeCapaDeLivro}"
+											completeMethod="#{cadastrosLivrosView.completeTipoDeCapaDeLivro}"
+											var="tipoDeCapaDeLivro"
+											itemLabel="#{tipoDeCapaDeLivro.tipoDeCapa}"
+											itemValue="#{tipoDeCapaDeLivro}"
+											converter="tipodeCapaDeLivroConverter" forceSelection="true"
+											inputStyle="width: 160px" />
+									</p:column>
 
-							<p:column>Número de páginas:</p:column>
-							<p:column>
-								<p:inputText styleClass="iptImputLivro"
-									value="#{cadastrosLivrosView.numeroDePaginas}" />
-							</p:column>
+									<p:column>Edição:</p:column>
+									<p:column>
+										<p:autoComplete id="iptEdicao"
+											value="#{cadastrosLivrosView.edicao}"
+											completeMethod="#{cadastrosLivrosView.completeEdicao}"
+											var="edicao" itemLabel="#{edicao.edicao}"
+											itemValue="#{edicao}" converter="edicaoConverter"
+											forceSelection="true" inputStyle="width: 60px" />
+									</p:column>
 
-						</p:row>
+								</p:row>
 
-						<p:row>
+							</p:panelGrid>
 
-							<p:column>Editora:</p:column>
-							<p:column>
-								<p:autoComplete id="iptEditora" styleClass="iptImputLivro"
-									value="#{cadastrosLivrosView.editora}"
-									completeMethod="#{cadastrosLivrosView.completeEditora}"
-									var="editora" itemLabel="#{editora.nomeFantasia}"
-									itemValue="#{editora}" converter="editoraConverter"
-									forceSelection="true" />
-							</p:column>
+						</p:tab>
 
-						</p:row>
+						<p:tab title="Autores">
 
-						<p:row>
+							<p:toolbar style="width:771px">
 
-							<p:column>Informações:</p:column>
-							<p:column>
-								<p:inputTextarea rows="6" cols="50" styleClass="iptImputLivro"
-									value="#{cadastrosLivrosView.informacoes}" />
-							</p:column>
+								<f:facet name="left">
+									<p:autoComplete id="iptAutor" inputStyle="width: 760px" />
+									<p:watermark for="iptAutor"
+										value="Digite o nome de autor que deseja relacionar com o livro." />
+								</f:facet>
+								
+							</p:toolbar>
+							
+							<p:outputPanel style="height:140px">
+								teste...
+							</p:outputPanel>
 
-						</p:row>
+						</p:tab>
 
-					</p:panelGrid>
+						<p:tab title="Assuntos">
+						</p:tab>
+						<p:tab title="Informações">
+
+							<p:panelGrid styleClass="ui-noborder"
+								style="ui-panelgrid-blank;margin-top:0px">
+
+								<p:row>
+
+									<p:column>
+										<p:inputTextarea rows="11" cols="120" autoResize="false"
+											style="height:168px; width : 750px"
+											value="#{cadastrosLivrosView.informacoes}" />
+									</p:column>
+
+								</p:row>
+
+							</p:panelGrid>
+
+						</p:tab>
+					</p:tabView>
 
 					<p:toolbar
 						style="padding-top:4px;padding-right: 8px;border:0px;background-image:linear-gradient(to bottom, #ffffff, #ffffff);">
 
 						<f:facet name="right">
 
-							<p:commandButton title="Salvar e continuar" value="Salvar e continuar"
-								icon="ui-icon-disk"
+							<p:commandButton title="Salvar e continuar"
+								value="Salvar e continuar" icon="ui-icon-disk"
 								actionListener="#{cadastrosLivrosView.salvar(true)}"
 								update="growl otptPnlLista otptPnlLivro"
 								oncomplete="handleSalvarRequest(xhr, status, args)" />
@@ -220,7 +286,6 @@
 		</h:form>
 
 		<script type="text/javascript">
-		
 			function handleSalvarRequest(xhr, status, args) {
 				if (args.validationFailed || !args.salvo) {
 					PF('dlgLivro').jq.effect("shake", {
@@ -230,9 +295,8 @@
 					PF('dlgLivro').jq.effect("bounce", "slow");
 				} else {
 					PF('dlgLivro').hide();
-				}	
+				}
 			}
-			
 		</script>
 
 	</ui:define>

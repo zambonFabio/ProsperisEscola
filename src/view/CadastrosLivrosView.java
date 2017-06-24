@@ -16,8 +16,12 @@ import org.infinispan.marshall.exts.ArrayExternalizers.ListArray;
 import org.primefaces.context.RequestContext;
 
 import conexao.ImplementacaoOperacoes;
+import modelo.Ano;
+import modelo.Edicao;
 import modelo.Editora;
+import modelo.Idioma;
 import modelo.Livro;
+import modelo.TipoDeCapaDeLivro;
 import util.Utilitario;
 
 @ManagedBean(name="cadastrosLivrosView")
@@ -35,11 +39,19 @@ public class CadastrosLivrosView implements Serializable {
 	private String informacoes;
 	private Boolean ativo;
 	private Editora editora;
+	private Ano ano;
+	private Edicao edicao;
+	private Idioma idioma;
+	private TipoDeCapaDeLivro tipoDeCapaDeLivro;
 
 	private String tituloFiltro;
 
 	private List<Livro> livros;
 	private List<Editora> editoras;
+	private List<Ano> anos;
+	private List<Edicao> edicoes;
+	private List<Idioma> idiomas;
+	private List<TipoDeCapaDeLivro> tiposDeCapasDeLivros;
 
 	String msg = null;
 
@@ -47,6 +59,10 @@ public class CadastrosLivrosView implements Serializable {
 	private void inicializar() {
 		setLivros(new ArrayList<Livro>());
 		setEditoras(new ArrayList<Editora>());
+		setAnos(new ArrayList<Ano>());
+		setEdicoes(new ArrayList<Edicao>());
+		setIdiomas(new ArrayList<Idioma>());
+		setTiposDeCapasDeLivros(new ArrayList<TipoDeCapaDeLivro>());
 	}
 
 	public void consultar() throws ExecutionException {
@@ -84,6 +100,82 @@ public class CadastrosLivrosView implements Serializable {
 		return editoras;
 
 	}
+	
+	public List<Ano> completeAno(String query) throws ExecutionException {
+
+		anos.clear();
+		
+		if (query != null) {
+
+			String consulta = "from Ano a " +
+							  "where cast(a.ano as string) like '%" + query + "%' " +
+							  "order by a.ano";
+
+			ImplementacaoOperacoes<Ano> operacao = new ImplementacaoOperacoes<Ano>();
+			anos = operacao.queryList(consulta);
+
+		}
+
+		return anos;
+
+	}
+	
+	public List<Edicao> completeEdicao(String query) throws ExecutionException {
+
+		edicoes.clear();
+		
+		if (query != null) {
+
+			String consulta = "from Edicao a " +
+							  "where upper(a.edicao) like '%" + query.toUpperCase() + "%' " +
+							  "order by a.edicao";
+
+			ImplementacaoOperacoes<Edicao> operacao = new ImplementacaoOperacoes<Edicao>();
+			edicoes = operacao.queryList(consulta);
+
+		}
+
+		return edicoes;
+
+	}
+	
+	public List<Idioma> completeIdioma(String query) throws ExecutionException {
+
+		idiomas.clear();
+		
+		if (query != null) {
+
+			String consulta = "from Idioma a " +
+							  "where upper(a.idioma) like '%" + query.toUpperCase() + "%' " +
+							  "order by a.idioma";
+
+			ImplementacaoOperacoes<Idioma> operacao = new ImplementacaoOperacoes<Idioma>();
+			idiomas = operacao.queryList(consulta);
+
+		}
+
+		return idiomas;
+
+	}
+	
+	public List<TipoDeCapaDeLivro> completeTipoDeCapaDeLivro(String query) throws ExecutionException {
+
+		tiposDeCapasDeLivros.clear();
+		
+		if (query != null) {
+
+			String consulta = "from TipoDeCapaDeLivro a " +
+					  		  "where upper(a.tipoDeCapa) like '%" + query.toUpperCase() + "%' " +
+					          "order by a.tipoDeCapa";
+
+			ImplementacaoOperacoes<TipoDeCapaDeLivro> operacao = new ImplementacaoOperacoes<TipoDeCapaDeLivro>();
+			tiposDeCapasDeLivros = operacao.queryList(consulta);
+
+		}
+
+		return tiposDeCapasDeLivros;
+
+	}
 
 	public void novo() {
 		this.setId(null);
@@ -94,6 +186,10 @@ public class CadastrosLivrosView implements Serializable {
 		this.informacoes = null;
 		this.ativo = true;
 		this.editora = null;
+		this.ano = null;
+		this.edicao = null;
+		this.idioma = null;
+		this.tipoDeCapaDeLivro = null;
 	}
 
 	public void salvar(Boolean continuar) throws ExecutionException {
@@ -121,6 +217,10 @@ public class CadastrosLivrosView implements Serializable {
 				livro.setInformacoes(this.getInformacoes());
 				livro.setAtivo(this.getAtivo());
 				livro.setEditora(this.getEditora());
+				livro.setAno(this.getAno());
+				livro.setEdicao(this.getEdicao());
+				livro.setIdioma(this.getIdioma());
+				livro.setTipoDeCapaDeLivro(this.getTipoDeCapaDeLivro());
 
 				operacao.saveOrUpdate(livro);
 
@@ -136,6 +236,10 @@ public class CadastrosLivrosView implements Serializable {
 				this.setInformacoes(null);
 				this.setAtivo(true);
 				this.setEditora(null);
+				this.setAno(null);
+				this.setEdicao(null);
+				this.setIdioma(null);
+				this.setTipoDeCapaDeLivro(null);
 
 				consultar();
 
@@ -163,6 +267,10 @@ public class CadastrosLivrosView implements Serializable {
 		this.setInformacoes(livro.getInformacoes());
 		this.setAtivo(livro.getAtivo());
 		this.setEditora(livro.getEditora());
+		this.setAno(livro.getAno());
+		this.setEdicao(livro.getEdicao());
+		this.setIdioma(livro.getIdioma());
+		this.setTipoDeCapaDeLivro(livro.getTipoDeCapaDeLivro());
 	}
 
 	public void excluir(Livro livro) throws ExecutionException {
@@ -273,6 +381,70 @@ public class CadastrosLivrosView implements Serializable {
 
 	public void setEditoras(List<Editora> editoras) {
 		this.editoras = editoras;
+	}
+
+	public Ano getAno() {
+		return ano;
+	}
+
+	public void setAno(Ano ano) {
+		this.ano = ano;
+	}
+
+	public List<Ano> getAnos() {
+		return anos;
+	}
+
+	public void setAnos(List<Ano> anos) {
+		this.anos = anos;
+	}
+
+	public Edicao getEdicao() {
+		return edicao;
+	}
+
+	public void setEdicao(Edicao edicao) {
+		this.edicao = edicao;
+	}
+
+	public List<Edicao> getEdicoes() {
+		return edicoes;
+	}
+
+	public void setEdicoes(List<Edicao> edicoes) {
+		this.edicoes = edicoes;
+	}
+
+	public Idioma getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(Idioma idioma) {
+		this.idioma = idioma;
+	}
+
+	public TipoDeCapaDeLivro getTipoDeCapaDeLivro() {
+		return tipoDeCapaDeLivro;
+	}
+
+	public void setTipoDeCapaDeLivro(TipoDeCapaDeLivro tipoDeCapaDeLivro) {
+		this.tipoDeCapaDeLivro = tipoDeCapaDeLivro;
+	}
+
+	public List<Idioma> getIdiomas() {
+		return idiomas;
+	}
+
+	public void setIdiomas(List<Idioma> idiomas) {
+		this.idiomas = idiomas;
+	}
+
+	public List<TipoDeCapaDeLivro> getTiposDeCapasDeLivros() {
+		return tiposDeCapasDeLivros;
+	}
+
+	public void setTiposDeCapasDeLivros(List<TipoDeCapaDeLivro> tiposDeCapasDeLivros) {
+		this.tiposDeCapasDeLivros = tiposDeCapasDeLivros;
 	}
 	
 }

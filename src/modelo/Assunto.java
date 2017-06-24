@@ -1,12 +1,17 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -24,7 +29,12 @@ public class Assunto implements Serializable{
 
 	@Column(name = "assunto", unique = true, nullable = false, insertable = true, updatable = true, length = 100)
 	private String assunto;
-
+	
+	@ManyToMany(fetch=FetchType.LAZY) 
+	@JoinTable(name="assunto_livro", schema="public",
+		joinColumns = @JoinColumn(name="id_assunto"),inverseJoinColumns=@JoinColumn(name="id_livro")) 
+	 private Collection<Livro> livros; 
+	  
 	public Integer getId() {
 		return id;
 	}
@@ -41,4 +51,13 @@ public class Assunto implements Serializable{
 		this.assunto = assunto;
 	}
 
+	public Collection<Livro> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(Collection<Livro> livros) {
+		this.livros = livros;
+	}
+
+	
 }

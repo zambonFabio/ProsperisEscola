@@ -1,14 +1,20 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "edicao", schema = "public")
@@ -25,6 +31,10 @@ public class Edicao implements Serializable{
 	@Column(name = "edicao", unique = true, nullable = false, insertable = true, updatable = true, length = 100)
 	private String edicao;
 
+	@OneToMany(mappedBy="edicao", fetch = FetchType.LAZY) 
+	@Cascade(CascadeType.ALL) 
+	private Collection<Livro> livros; 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -41,4 +51,14 @@ public class Edicao implements Serializable{
 		this.edicao = edicao;
 	}
 
+	public Collection<Livro> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(Collection<Livro> livros) {
+		this.livros = livros;
+	}
+
+	
+	
 }

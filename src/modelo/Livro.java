@@ -1,12 +1,9 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.*;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -50,6 +47,35 @@ public class Livro implements Serializable {
 	@Cascade(CascadeType.SAVE_UPDATE)
 	private Editora editora;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_ano", insertable = true, updatable = true)
+	@Fetch(FetchMode.JOIN)
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private Ano ano;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_edicao", insertable = true, updatable = true)
+	@Fetch(FetchMode.JOIN)
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private Edicao edicao;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_idioma", insertable = true, updatable = true)
+	@Fetch(FetchMode.JOIN)
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private Idioma idioma;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_tipo_de_capa", insertable = true, updatable = true)
+	@Fetch(FetchMode.JOIN)
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private TipoDeCapaDeLivro tipoDeCapaDeLivro;
+	
+	@ManyToMany(fetch=FetchType.LAZY) 
+	@JoinTable(name="assunto_livro", schema="public",
+		joinColumns = @JoinColumn(name="id_livro"),inverseJoinColumns=@JoinColumn(name="id_assunto")) 
+	 private Collection<Assunto> assuntos;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -112,6 +138,46 @@ public class Livro implements Serializable {
 
 	public void setEditora(Editora editora) {
 		this.editora = editora;
+	}
+
+	public Ano getAno() {
+		return ano;
+	}
+
+	public void setAno(Ano ano) {
+		this.ano = ano;
+	}
+
+	public Edicao getEdicao() {
+		return edicao;
+	}
+
+	public void setEdicao(Edicao edicao) {
+		this.edicao = edicao;
+	}
+
+	public Idioma getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(Idioma idioma) {
+		this.idioma = idioma;
+	}
+
+	public TipoDeCapaDeLivro getTipoDeCapaDeLivro() {
+		return tipoDeCapaDeLivro;
+	}
+
+	public void setTipoDeCapaDeLivro(TipoDeCapaDeLivro tipoDeCapaDeLivro) {
+		this.tipoDeCapaDeLivro = tipoDeCapaDeLivro;
+	}
+
+	public Collection<Assunto> getAssuntos() {
+		return assuntos;
+	}
+
+	public void setAssuntos(Collection<Assunto> assuntos) {
+		this.assuntos = assuntos;
 	}
 
 }
