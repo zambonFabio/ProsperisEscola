@@ -3,6 +3,7 @@ package view;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -17,6 +18,7 @@ import org.primefaces.context.RequestContext;
 
 import conexao.ImplementacaoOperacoes;
 import modelo.Ano;
+import modelo.Assunto;
 import modelo.Edicao;
 import modelo.Editora;
 import modelo.Idioma;
@@ -43,6 +45,7 @@ public class CadastrosLivrosView implements Serializable {
 	private Edicao edicao;
 	private Idioma idioma;
 	private TipoDeCapaDeLivro tipoDeCapaDeLivro;
+	private Assunto assunto;
 
 	private String tituloFiltro;
 
@@ -52,6 +55,8 @@ public class CadastrosLivrosView implements Serializable {
 	private List<Edicao> edicoes;
 	private List<Idioma> idiomas;
 	private List<TipoDeCapaDeLivro> tiposDeCapasDeLivros;
+	private List<Assunto> assuntos;
+	private List<Assunto> assuntosTbl; 
 
 	String msg = null;
 
@@ -63,6 +68,8 @@ public class CadastrosLivrosView implements Serializable {
 		setEdicoes(new ArrayList<Edicao>());
 		setIdiomas(new ArrayList<Idioma>());
 		setTiposDeCapasDeLivros(new ArrayList<TipoDeCapaDeLivro>());
+		setAssuntos(new ArrayList<Assunto>());
+		setAssuntosTbl(new ArrayList<Assunto>());
 	}
 
 	public void consultar() throws ExecutionException {
@@ -176,6 +183,34 @@ public class CadastrosLivrosView implements Serializable {
 		return tiposDeCapasDeLivros;
 
 	}
+	
+	public List<Assunto> completeAssunto(String query) throws ExecutionException {
+
+		assuntos.clear();
+		
+		if (query != null) {
+
+			String consulta = "from Assunto a " +
+							  "where upper(a.assunto) like '%" + query.toUpperCase() + "%' " +
+							  "order by a.assunto";
+
+			ImplementacaoOperacoes<Assunto> operacao = new ImplementacaoOperacoes<Assunto>();
+			assuntos = operacao.queryList(consulta);
+
+		}
+
+		return assuntos;
+
+	}
+	
+	public void incluirAssunto() {
+		
+		if (this.assunto != null) {
+			assuntosTbl.add(getAssunto());
+		}
+		
+		
+	}
 
 	public void novo() {
 		this.setId(null);
@@ -190,6 +225,9 @@ public class CadastrosLivrosView implements Serializable {
 		this.edicao = null;
 		this.idioma = null;
 		this.tipoDeCapaDeLivro = null;
+		
+		assuntosTbl.clear();
+		
 	}
 
 	public void salvar(Boolean continuar) throws ExecutionException {
@@ -221,6 +259,7 @@ public class CadastrosLivrosView implements Serializable {
 				livro.setEdicao(this.getEdicao());
 				livro.setIdioma(this.getIdioma());
 				livro.setTipoDeCapaDeLivro(this.getTipoDeCapaDeLivro());
+				livro.setAssuntos(this.getAssuntosTbl());
 
 				operacao.saveOrUpdate(livro);
 
@@ -240,6 +279,8 @@ public class CadastrosLivrosView implements Serializable {
 				this.setEdicao(null);
 				this.setIdioma(null);
 				this.setTipoDeCapaDeLivro(null);
+				
+				assuntosTbl.clear();
 
 				consultar();
 
@@ -271,6 +312,7 @@ public class CadastrosLivrosView implements Serializable {
 		this.setEdicao(livro.getEdicao());
 		this.setIdioma(livro.getIdioma());
 		this.setTipoDeCapaDeLivro(livro.getTipoDeCapaDeLivro());
+		this.setAssuntosTbl((List<Assunto>)livro.getAssuntos());
 	}
 
 	public void excluir(Livro livro) throws ExecutionException {
@@ -446,5 +488,31 @@ public class CadastrosLivrosView implements Serializable {
 	public void setTiposDeCapasDeLivros(List<TipoDeCapaDeLivro> tiposDeCapasDeLivros) {
 		this.tiposDeCapasDeLivros = tiposDeCapasDeLivros;
 	}
+
+	public List<Assunto> getAssuntos() {
+		return assuntos;
+	}
+
+	public void setAssuntos(List<Assunto> assuntos) {
+		this.assuntos = assuntos;
+	}
+
+	public Assunto getAssunto() {
+		return assunto;
+	}
+
+	public void setAssunto(Assunto assunto) {
+		this.assunto = assunto;
+	}
+
+	public List<Assunto> getAssuntosTbl() {
+		return assuntosTbl;
+	}
+
+	public void setAssuntosTbl(List<Assunto> assuntosTbl) {
+		this.assuntosTbl = assuntosTbl;
+	}
+	
+	
 	
 }

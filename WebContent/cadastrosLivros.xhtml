@@ -209,9 +209,9 @@
 									<p:watermark for="iptAutor"
 										value="Digite o nome de autor que deseja relacionar com o livro." />
 								</f:facet>
-								
+
 							</p:toolbar>
-							
+
 							<p:outputPanel style="height:140px">
 								teste...
 							</p:outputPanel>
@@ -219,7 +219,51 @@
 						</p:tab>
 
 						<p:tab title="Assuntos">
+
+							<p:toolbar style="width:771px">
+
+								<f:facet name="left">
+
+									<p:autoComplete id="iptAssunto" inputStyle="width: 760px"
+										value="#{cadastrosLivrosView.assunto}"
+										completeMethod="#{cadastrosLivrosView.completeAssunto}"
+										var="assunto" itemLabel="#{assunto.assunto}"
+										itemValue="#{assunto}" converter="assuntoConverter"
+										forceSelection="true" />
+
+									<p:watermark for="iptAssunto"
+										value="Digite o assunto que deseja relacionar com o livro." />
+
+									<p:commandButton title="Salvar" value="Salvar"
+										icon="ui-icon-disk"
+										actionListener="#{cadastrosLivrosView.incluirAssunto}" 
+										update="otptPnlAssunto"/>
+
+								</f:facet>
+
+							</p:toolbar>
+
+							<p:outputPanel id="otptPnlAssunto" style="140px">
+
+								<p:dataTable id="dttblAssunto"
+									value="#{cadastrosLivrosView.assuntosTbl}" var="assunto"
+									selectionMode="single" rowKey="#{assunto.id}"
+									resizableColumns="true"
+									rendered="#{cadastrosLivrosView.assuntos != null and not empty cadastrosLivrosView.assuntos}">
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Assunto" />
+										</f:facet>
+										<h:outputText value="#{assunto.assunto}" />
+									</p:column>
+
+								</p:dataTable>
+
+							</p:outputPanel>
+
 						</p:tab>
+
 						<p:tab title="Informações">
 
 							<p:panelGrid styleClass="ui-noborder"
