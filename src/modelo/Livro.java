@@ -76,6 +76,11 @@ public class Livro implements Serializable {
 		joinColumns = @JoinColumn(name="id_livro"),inverseJoinColumns=@JoinColumn(name="id_assunto")) 
 	 private Collection<Assunto> assuntos;
 	
+	@ManyToMany(fetch=FetchType.LAZY) 
+	@JoinTable(name="assunto_autor", schema="public",
+		joinColumns = @JoinColumn(name="id_livro"),inverseJoinColumns=@JoinColumn(name="id_pessoa")) 
+	 private Collection<Autor> autores;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -180,4 +185,14 @@ public class Livro implements Serializable {
 		this.assuntos = assuntos;
 	}
 
+	public Collection<Autor> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(Collection<Autor> autores) {
+		this.autores = autores;
+	}
+
+	
+	
 }

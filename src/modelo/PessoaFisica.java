@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pessoa_fisica", schema = "public")
-@PrimaryKeyJoinColumn(name = "id")
+@PrimaryKeyJoinColumn(name = "id_pessoa")
 public class PessoaFisica extends Pessoa {
 
 	private static final long serialVersionUID = 1L;

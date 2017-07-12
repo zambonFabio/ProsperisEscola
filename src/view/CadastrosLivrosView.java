@@ -19,6 +19,7 @@ import org.primefaces.context.RequestContext;
 import conexao.ImplementacaoOperacoes;
 import modelo.Ano;
 import modelo.Assunto;
+import modelo.Autor;
 import modelo.Edicao;
 import modelo.Editora;
 import modelo.Idioma;
@@ -46,6 +47,7 @@ public class CadastrosLivrosView implements Serializable {
 	private Idioma idioma;
 	private TipoDeCapaDeLivro tipoDeCapaDeLivro;
 	private Assunto assunto;
+	private Autor autor;
 
 	private String tituloFiltro;
 
@@ -56,7 +58,9 @@ public class CadastrosLivrosView implements Serializable {
 	private List<Idioma> idiomas;
 	private List<TipoDeCapaDeLivro> tiposDeCapasDeLivros;
 	private List<Assunto> assuntos;
-	private List<Assunto> assuntosTbl; 
+	private List<Assunto> assuntosTbl;
+	private List<Autor> autores;
+	private List<Autor> autoresTbl;
 
 	String msg = null;
 
@@ -70,6 +74,8 @@ public class CadastrosLivrosView implements Serializable {
 		setTiposDeCapasDeLivros(new ArrayList<TipoDeCapaDeLivro>());
 		setAssuntos(new ArrayList<Assunto>());
 		setAssuntosTbl(new ArrayList<Assunto>());
+		setAutores(new ArrayList<Autor>());
+		setAutoresTbl(new ArrayList<Autor>());
 	}
 
 	public void consultar() throws ExecutionException {
@@ -203,15 +209,51 @@ public class CadastrosLivrosView implements Serializable {
 
 	}
 	
+	public List<Autor> completeAutor(String query) throws ExecutionException {
+
+		autores.clear();
+		
+		if (query != null) {
+
+			String consulta = "from Autor a " +
+							  "where upper(a.nome) like '%" + query.toUpperCase() + "%' " +
+							  "order by a.nome";
+
+			ImplementacaoOperacoes<Autor> operacao = new ImplementacaoOperacoes<Autor>();
+			autores = operacao.queryList(consulta);
+
+		}
+
+		return autores;
+
+	}
+	
 	public void incluirAssunto() {
 		
 		if (this.assunto != null) {
 			assuntosTbl.add(getAssunto());
+			this.assunto = null;
 		}
 		
+	}
+	
+	public void incluirAutor() {
+		
+		if (this.autor != null) {
+			autoresTbl.add(getAutor());
+			this.autor = null;
+		}
 		
 	}
+	
+	public void excluirAssunto(Assunto assunto) {
+		assuntosTbl.remove(assunto);
+	}
 
+	public void excluirAutor(Autor autor) {
+		autoresTbl.remove(autor);
+	}
+	
 	public void novo() {
 		this.setId(null);
 		this.setTitulo(null);
@@ -225,8 +267,13 @@ public class CadastrosLivrosView implements Serializable {
 		this.edicao = null;
 		this.idioma = null;
 		this.tipoDeCapaDeLivro = null;
+		this.assunto = null;
+		this.assuntos = null;
+		this.assuntosTbl = null;
+		this.autor = null;
+		this.autores = null;
+		this.autoresTbl = null;
 		
-		assuntosTbl.clear();
 		
 	}
 
@@ -260,6 +307,7 @@ public class CadastrosLivrosView implements Serializable {
 				livro.setIdioma(this.getIdioma());
 				livro.setTipoDeCapaDeLivro(this.getTipoDeCapaDeLivro());
 				livro.setAssuntos(this.getAssuntosTbl());
+				livro.setAutores(this.getAutoresTbl());
 
 				operacao.saveOrUpdate(livro);
 
@@ -313,6 +361,7 @@ public class CadastrosLivrosView implements Serializable {
 		this.setIdioma(livro.getIdioma());
 		this.setTipoDeCapaDeLivro(livro.getTipoDeCapaDeLivro());
 		this.setAssuntosTbl((List<Assunto>)livro.getAssuntos());
+		this.setAutoresTbl((List<Autor>)livro.getAutores());
 	}
 
 	public void excluir(Livro livro) throws ExecutionException {
@@ -511,6 +560,30 @@ public class CadastrosLivrosView implements Serializable {
 
 	public void setAssuntosTbl(List<Assunto> assuntosTbl) {
 		this.assuntosTbl = assuntosTbl;
+	}
+
+	public Autor getAutor() {
+		return autor;
+	}
+
+	public void setAutor(Autor autor) {
+		this.autor = autor;
+	}
+
+	public List<Autor> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(List<Autor> autores) {
+		this.autores = autores;
+	}
+
+	public List<Autor> getAutoresTbl() {
+		return autoresTbl;
+	}
+
+	public void setAutoresTbl(List<Autor> autoresTbl) {
+		this.autoresTbl = autoresTbl;
 	}
 	
 	

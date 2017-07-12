@@ -205,15 +205,53 @@
 							<p:toolbar style="width:771px">
 
 								<f:facet name="left">
-									<p:autoComplete id="iptAutor" inputStyle="width: 760px" />
+
+									<p:autoComplete id="iptAutor" inputStyle="width: 760px"
+										value="#{cadastrosLivrosView.autor}"
+										completeMethod="#{cadastrosLivrosView.completeAutor}"
+										var="autor" itemLabel="#{autor.nome}"
+										itemValue="#{autor}" converter="autorConverter"
+										forceSelection="true">
+
+										<p:ajax event="itemSelect" update="otptPnlAutor iptAutor"
+											listener="#{cadastrosLivrosView.incluirAutor}" />
+
+									</p:autoComplete>
+
 									<p:watermark for="iptAutor"
-										value="Digite o nome de autor que deseja relacionar com o livro." />
+										value="Digite o autor que deseja relacionar com o livro." />
+
 								</f:facet>
 
 							</p:toolbar>
 
-							<p:outputPanel style="height:140px">
-								teste...
+							<p:outputPanel id="otptPnlAutor"
+								style="width:780px;">
+
+								<p:dataTable id="dttblAutor"
+									value="#{cadastrosLivrosView.autoresTbl}" var="autor"
+									selectionMode="single" rowKey="#{autor.id}"
+									resizableColumns="true"
+									rendered="#{cadastrosLivrosView.autoresTbl != null and not empty cadastrosLivrosView.autoresTbl}">
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Autor" />
+										</f:facet>
+										<h:outputText value="#{auntor.nome}" />
+									</p:column>
+
+									<p:column styleClass="cl-dt-btn" width="8%">
+
+										<p:commandButton title="Excluir um autor selecionada."
+											icon="ui-icon-trash" styleClass="btn-dt"
+											actionListener="#{cadastrosLivrosView.excluirAutor(autor)}"
+											update="dttblAutor" />
+
+									</p:column>
+
+								</p:dataTable>
+
 							</p:outputPanel>
 
 						</p:tab>
@@ -229,33 +267,43 @@
 										completeMethod="#{cadastrosLivrosView.completeAssunto}"
 										var="assunto" itemLabel="#{assunto.assunto}"
 										itemValue="#{assunto}" converter="assuntoConverter"
-										forceSelection="true" />
+										forceSelection="true">
+
+										<p:ajax event="itemSelect" update="otptPnlAssunto iptAssunto"
+											listener="#{cadastrosLivrosView.incluirAssunto}" />
+
+									</p:autoComplete>
 
 									<p:watermark for="iptAssunto"
 										value="Digite o assunto que deseja relacionar com o livro." />
-
-									<p:commandButton title="Salvar" value="Salvar"
-										icon="ui-icon-disk"
-										actionListener="#{cadastrosLivrosView.incluirAssunto}" 
-										update="otptPnlAssunto"/>
 
 								</f:facet>
 
 							</p:toolbar>
 
-							<p:outputPanel id="otptPnlAssunto" style="140px">
+							<p:outputPanel id="otptPnlAssunto"
+								style="width:780px;">
 
 								<p:dataTable id="dttblAssunto"
 									value="#{cadastrosLivrosView.assuntosTbl}" var="assunto"
 									selectionMode="single" rowKey="#{assunto.id}"
 									resizableColumns="true"
-									rendered="#{cadastrosLivrosView.assuntos != null and not empty cadastrosLivrosView.assuntos}">
+									rendered="#{cadastrosLivrosView.assuntosTbl != null and not empty cadastrosLivrosView.assuntosTbl}">
 
 									<p:column>
 										<f:facet name="header">
 											<h:outputText value="Assunto" />
 										</f:facet>
 										<h:outputText value="#{assunto.assunto}" />
+									</p:column>
+
+									<p:column styleClass="cl-dt-btn" width="8%">
+
+										<p:commandButton title="Excluir um assunto selecionada."
+											icon="ui-icon-trash" styleClass="btn-dt"
+											actionListener="#{cadastrosLivrosView.excluirAssunto(assunto)}"
+											update="dttblAssunto" />
+
 									</p:column>
 
 								</p:dataTable>
