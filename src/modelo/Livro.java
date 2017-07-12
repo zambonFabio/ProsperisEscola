@@ -77,7 +77,7 @@ public class Livro implements Serializable {
 	 private Collection<Assunto> assuntos;
 	
 	@ManyToMany(fetch=FetchType.LAZY) 
-	@JoinTable(name="assunto_autor", schema="public",
+	@JoinTable(name="autor_livro", schema="public",
 		joinColumns = @JoinColumn(name="id_livro"),inverseJoinColumns=@JoinColumn(name="id_pessoa")) 
 	 private Collection<Autor> autores;
 	

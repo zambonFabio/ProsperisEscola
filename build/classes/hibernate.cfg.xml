@@ -41,6 +41,8 @@
 		<mapping class="modelo.TipoDeCapa" />
 		<mapping class="modelo.TipoDeCapaDeLivro"/>
 		<mapping class="modelo.Livro" />
+		<mapping class="modelo.AgrupadorDeDados"/>
+		<mapping class="modelo.Usuario"/>
 
 	</session-factory>
 </hibernate-configuration>

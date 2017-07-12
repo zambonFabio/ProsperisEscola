@@ -33,7 +33,7 @@ public class Assunto implements Serializable{
 	@ManyToMany(fetch=FetchType.LAZY) 
 	@JoinTable(name="assunto_livro", schema="public",
 		joinColumns = @JoinColumn(name="id_assunto"),inverseJoinColumns=@JoinColumn(name="id_livro")) 
-	 private Collection<Livro> livros; 
+	private Collection<Livro> livros; 
 	  
 	public Integer getId() {
 		return id;

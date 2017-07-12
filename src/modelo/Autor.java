@@ -18,7 +18,7 @@ public class Autor extends PessoaFisica {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToMany(fetch=FetchType.LAZY) 
-	@JoinTable(name="assunto_autor", schema="public",
+	@JoinTable(name="autor_livro", schema="public",
 		joinColumns = @JoinColumn(name="id_pessoa"),inverseJoinColumns=@JoinColumn(name="id_livro")) 
 	 private Collection<Livro> livros;
 
